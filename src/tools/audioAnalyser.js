@@ -1,6 +1,13 @@
 let audioContext = null
-let source = null
 let analyser = null
+
+// 静默镜像 <audio>：真正出声的永远只有主元素（它从不进 Web Audio 图，切后台由
+// 浏览器原生保证继续播）；镜像被接管进图、不连 destination，全程无声，只喂频谱
+let mirror = null
+let mainAudio = null
+
+// 镜像与主元素位置差超过该秒数就硬回正（对装饰性频谱不可感知）
+const DRIFT_LIMIT = 0.25
 
 const TILT_KEY = 'spectrumTilt'
 const SIGMA_KEY = 'spectrumSigma'
@@ -158,24 +165,123 @@ function applyGaussian(data) {
     return result
 }
 
-export function audioAnalyser(audio) {
+export function audioAnalyser(main) {
 
     if (analyser) {
         return analyser
     }
 
+    mainAudio = main
+
     audioContext = new AudioContext()
 
-    source = audioContext.createMediaElementSource(audio)
+    mirror = new Audio()
+    mirror.preload = 'auto'
+
+    const source = audioContext.createMediaElementSource(mirror)
 
     analyser = audioContext.createAnalyser()
     analyser.fftSize = 512
     analyser.smoothingTimeConstant = 0.93
 
     source.connect(analyser)
-    analyser.connect(audioContext.destination)
+
+    // 兜底接一条零增益通道到 destination：保证渲染图一定被拉起、analyser 一定出数据
+    const silent = audioContext.createGain()
+    silent.gain.value = 0
+    analyser.connect(silent)
+    silent.connect(audioContext.destination)
+
+    // 本函数只在首次点卡片的用户手势栈里被调，此刻先把镜像指到同一曲目
+    mirror.src = main.currentSrc || main.src
+
+    bindMirror(main)
+    bindRevival()
 
     return analyser
+}
+
+function bindMirror(main) {
+
+    // 主元素开始出声（含后台自动切歌），镜像同曲同位无声跟进
+    main.addEventListener('play', followMain)
+
+    main.addEventListener('pause', () => {
+        mirror.pause()
+    })
+
+    // 主元素拖/跳进度后立即跟位（暂停中拖动也同步）
+    main.addEventListener('seeked', () => {
+        if (mirror.readyState >= 1) {
+            mirror.currentTime = main.currentTime
+        }
+    })
+
+    main.addEventListener('ratechange', () => {
+        mirror.playbackRate = main.playbackRate
+    })
+
+    // 播放中持续对表：镜像掉队（自动播放被拒、加载失败）就拉起来，漂移超限就回正
+    main.addEventListener('timeupdate', () => {
+        if (main.paused) return
+
+        if (mirror.paused && !mirror.error) {
+            if (mirror.readyState >= 1) {
+                mirror.currentTime = main.currentTime
+            }
+            mirror.play().catch(() => {})
+            return
+        }
+
+        if (Math.abs(mirror.currentTime - main.currentTime) > DRIFT_LIMIT) {
+            mirror.currentTime = main.currentTime
+        }
+    })
+}
+
+function followMain() {
+
+    const src = mainAudio.currentSrc || mainAudio.src
+
+    if (!src) return
+
+    if (mirror.src !== src) {
+        mirror.src = src
+    }
+
+    mirror.playbackRate = mainAudio.playbackRate
+
+    const sync = () => {
+        if (Math.abs(mirror.currentTime - mainAudio.currentTime) > 0.05) {
+            mirror.currentTime = mainAudio.currentTime
+        }
+        mirror.play().catch(() => {})
+    }
+
+    if (mirror.readyState >= 1) {
+        sync()
+    } else {
+        mirror.addEventListener('loadedmetadata', sync, { once: true })
+    }
+}
+
+// AudioContext 只影响频谱，不影响出声（出声走主元素原生通道），所以这里不做
+// onstatechange 之类的自动续命去对抗系统的后台挂起策略；只在用户手势或回到
+// 前台时尝试恢复一次，失败也无害，下次手势再来
+function bindRevival() {
+
+    const revive = () => {
+        if (audioContext.state !== 'suspended') return
+        audioContext.resume().catch(() => {})
+    }
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') revive()
+    })
+
+    document.addEventListener('pointerdown', revive, true)
+
+    mainAudio.addEventListener('play', revive)
 }
 
 export function getFrequency() {
