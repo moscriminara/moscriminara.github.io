@@ -3,7 +3,7 @@ name: Deploy Vue to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - other
 
 permissions:
   contents: read
