@@ -1,5 +1,5 @@
 <script setup>
-import { ref, inject, onMounted, onUnmounted } from 'vue'
+import { ref, computed, inject, onMounted, onUnmounted } from 'vue'
 import tracks from '../data/tracks.json'
 import { audioAnalyser } from '../tools/audioAnalyser'
 import { startSpectrum } from '../tools/spectrum'
@@ -8,6 +8,9 @@ const audio = inject('audio')
 const playing = inject('playing')
 const currentTrack = ref(null)
 
+const currentTime = ref(0)
+const duration = ref(0)
+
 const analyser = inject('analyser')
 const spectrumCanvas = inject('spectrumCanvas')
 
@@ -15,6 +18,11 @@ const shuffle = ref(false)
 
 const history = ref([])
 const historyIndex = ref(-1)
+
+const progressPercent = computed(() => {
+  if (!duration.value) return 0
+  return (currentTime.value / duration.value) * 100
+})
 
 async function playTrack(
     item,
@@ -154,9 +162,30 @@ function mediaSession() {
     })
 }
 
+function seek() {
+  audio.value.currentTime = Number(currentTime.value)
+}
+
+function formatTime(seconds) {
+    if (!seconds || isNaN(seconds)) return '0:00'
+
+    const minutes = Math.floor(seconds / 60)
+    const secs = Math.floor(seconds % 60)
+
+    return `${minutes}:${secs.toString().padStart(2, '0')}`
+}
+
 onMounted(() => {
     audio.value.addEventListener('ended', autoCoutinue)
     mediaSession()
+
+    audio.value.addEventListener('timeupdate', () => {
+        currentTime.value = audio.value.currentTime
+    })
+
+    audio.value.addEventListener('loadedmetadata', () => {
+        duration.value = audio.value.duration
+    })
 })
 onUnmounted(() => {
     audio.value.removeEventListener('ended', autoCoutinue)
@@ -223,5 +252,24 @@ onUnmounted(() => {
             </div>
 
         </div>
+
+        <div class="block progress">
+
+                <p>{{ formatTime(currentTime) }}</p>
+
+                <input
+                    type="range"
+                    min="0"
+                    :max="duration"
+                    step="0.01"
+                    v-model="currentTime"
+                    @input="seek"
+                    :style="{
+                        '--progress-percent': progressPercent + '%'
+                    }"
+                >
+                <p>{{ formatTime(duration) }}</p>
+                
+            </div>
     </section>
 </template>
