@@ -1,0 +1,34 @@
+{
+    "track": [
+        {
+            "title": "Floating Sense",
+            "artist": "ORIMATA",
+            "cover": "/tracks/floating_sense/floating_sense.png",
+            "audio": "/tracks/floating_sense/floating_sense.wav"
+        },
+        {
+            "title": "Inverted Moon",
+            "artist": "ORIMATA",
+            "cover": "/tracks/inverted_moon/inverted_moon.png",
+            "audio": "/tracks/inverted_moon/inverted_moon.wav"
+        },
+        {
+            "title": "Past of Life",
+            "artist": "ORIMATA",
+            "cover": "/tracks/past_of_life/past_of_life.png",
+            "audio": "/tracks/past_of_life/past_of_life.wav"
+        },
+        {
+            "title": "Shelter",
+            "artist": "Porter Robinson & Madeon",
+            "cover": "/tracks/shelter/shelter.jpg",
+            "audio": "/tracks/shelter/shelter.mp3"
+        },
+        {
+            "title": "Look at the Sky",
+            "artist": "Porter Robinson",
+            "cover": "/tracks/look_at_the_sky/look_at_the_sky.jpg",
+            "audio": "/tracks/look_at_the_sky/look_at_the_sky.mp3"
+        }
+    ]
+}
