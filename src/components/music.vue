@@ -3,6 +3,7 @@ import { ref, computed, inject, onMounted, onUnmounted } from 'vue'
 import tracks from '../data/tracks.json'
 import { audioAnalyser } from '../tools/audioAnalyser'
 import { startSpectrum } from '../tools/spectrum'
+import { onAudioEvent, unlockNative } from '../tools/backgroundAudio'
 import spectrumPanel from './spectrumPanel.vue'
 
 const audio = inject('audio')
@@ -75,6 +76,9 @@ async function playTrack(
         analyser.value = audioAnalyser(audio.value)
         startSpectrum(spectrumCanvas.value)
     }
+
+    // 借这次用户手势解锁备用元素，手机后台切换时才允许脚本 play 它
+    unlockNative(item.audio)
 
     await audio.value.play()
 }
@@ -202,20 +206,24 @@ function formatTime(seconds) {
     return `${minutes}:${secs.toString().padStart(2, '0')}`
 }
 
+const disposers = []
+
 onMounted(() => {
-    audio.value.addEventListener('ended', autoCoutinue)
+    // 事件统一挂在主/备用两个元素上，只有来自"当前承担播放"元素的事件会被处理
+    disposers.push(
+        onAudioEvent('ended', autoCoutinue),
+        onAudioEvent('timeupdate', () => {
+            currentTime.value = audio.value.currentTime
+        }),
+        onAudioEvent('loadedmetadata', () => {
+            duration.value = audio.value.duration
+        })
+    )
+
     mediaSession()
-
-    audio.value.addEventListener('timeupdate', () => {
-        currentTime.value = audio.value.currentTime
-    })
-
-    audio.value.addEventListener('loadedmetadata', () => {
-        duration.value = audio.value.duration
-    })
 })
 onUnmounted(() => {
-    audio.value.removeEventListener('ended', autoCoutinue)
+    disposers.forEach(dispose => dispose())
 })
 
 </script>
