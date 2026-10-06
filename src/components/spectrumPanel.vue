@@ -3,20 +3,25 @@ import { ref, onMounted } from 'vue'
 import {
     DEFAULT_TILT,
     DEFAULT_SIGMA,
+    DEFAULT_SENSITIVITY,
     getTilt,
     getSigma,
+    getSensitivity,
     setTilt,
-    setSigma
+    setSigma,
+    setSensitivity
 } from '../tools/audioAnalyser'
 
 const open = ref(false)
 
 const tilt = ref(DEFAULT_TILT)
 const sigma = ref(DEFAULT_SIGMA)
+const sensitivity = ref(DEFAULT_SENSITIVITY)
 
 onMounted(() => {
     tilt.value = getTilt()
     sigma.value = getSigma()
+    sensitivity.value = getSensitivity()
 })
 
 function updateTilt() {
@@ -27,12 +32,18 @@ function updateSigma() {
     setSigma(parseFloat(sigma.value))
 }
 
+function updateSensitivity() {
+    setSensitivity(parseFloat(sensitivity.value))
+}
+
 function reset() {
     tilt.value = DEFAULT_TILT
     sigma.value = DEFAULT_SIGMA
+    sensitivity.value = DEFAULT_SENSITIVITY
 
     updateTilt()
     updateSigma()
+    updateSensitivity()
 }
 
 </script>
@@ -55,14 +66,30 @@ function reset() {
 
         <div class="spectrum_row">
             <div class="spectrum_label">
-                <p>低频抑制 / 高频增益</p>
+                <p>灵敏度</p>
+                <span>×{{ sensitivity.toFixed(2) }}</span>
+            </div>
+
+            <input
+                type="range"
+                min="0.1"
+                max="3"
+                step="0.05"
+                v-model.number="sensitivity"
+                @input="updateSensitivity"
+            >
+        </div>
+
+        <div class="spectrum_row">
+            <div class="spectrum_label">
+                <p>高低频平衡</p>
                 <span>{{ tilt.toFixed(1) }} dB/oct</span>
             </div>
 
             <input
                 type="range"
-                min="0"
-                max="12"
+                min="-12"
+                max="24"
                 step="0.1"
                 v-model.number="tilt"
                 @input="updateTilt"
@@ -78,7 +105,7 @@ function reset() {
             <input
                 type="range"
                 min="0"
-                max="5"
+                max="10"
                 step="0.1"
                 v-model.number="sigma"
                 @input="updateSigma"
