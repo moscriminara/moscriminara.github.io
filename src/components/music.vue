@@ -19,6 +19,8 @@ const shuffle = ref(false)
 const history = ref([])
 const historyIndex = ref(-1)
 
+const seeking = ref(false)
+
 const progressPercent = computed(() => {
   if (!duration.value) return 0
   return (currentTime.value / duration.value) * 100
@@ -162,8 +164,32 @@ function mediaSession() {
     })
 }
 
-function seek() {
-  audio.value.currentTime = Number(currentTime.value)
+function setSeekPosition(event) {
+    const rect = event.currentTarget.getBoundingClientRect()
+
+    let percent = (event.clientX - rect.left) / rect.width
+
+    percent = Math.max(0, Math.min(1, percent))
+
+    currentTime.value = percent * duration.value
+    audio.value.currentTime = currentTime.value
+}
+
+function startSeek(event) {
+    seeking.value = true
+    event.currentTarget.setPointerCapture(event.pointerId)
+
+    setSeekPosition(event)
+}
+
+function moveSeek(event) {
+    if (!seeking.value) return
+
+    setSeekPosition(event)
+}
+
+function endSeek() {
+    seeking.value = false
 }
 
 function formatTime(seconds) {
@@ -253,7 +279,7 @@ onUnmounted(() => {
 
         </div>
 
-        <div class="block progress">
+        <div class="block progress no_select">
 
                 <p>{{ formatTime(currentTime) }}</p>
 
@@ -262,8 +288,11 @@ onUnmounted(() => {
                     min="0"
                     :max="duration"
                     step="0.01"
-                    v-model="currentTime"
-                    @input="seek"
+                    :value="currentTime"
+                    @pointerdown="startSeek"
+                    @pointermove="moveSeek"
+                    @pointerup="endSeek"
+                    @pointercancel="endSeek"
                     :style="{
                         '--progress-percent': progressPercent + '%'
                     }"
