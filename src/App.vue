@@ -1,17 +1,15 @@
 <script setup>
 import navigation from './components/navigation.vue';
-import { ref, provide, onMounted } from 'vue'
-import { activeAudio, initBackgroundAudio, onAudioEvent } from './tools/backgroundAudio'
+import { ref, provide } from 'vue'
 
 const audio = ref(null)
-const bgAudio = ref(null)
 
 const playing = ref(false)
 const analyser = ref(null)
 
 const spectrumCanvas = ref(null)
 
-provide('audio', activeAudio)
+provide('audio', audio)
 
 provide('playing', playing)
 provide('analyser', analyser)
@@ -32,31 +30,6 @@ function toggleTheme() {
   document.documentElement.dataset.theme = currentTheme
   localStorage.setItem('theme', currentTheme)
 }
-
-onMounted(() => {
-  initBackgroundAudio(audio.value, bgAudio.value)
-
-  // 播放状态跟随"当前承担播放"的元素（主/备用都可能），backgroundAudio 里做了事件过滤
-  onAudioEvent('play', () => {
-    playing.value = true
-
-    if ('mediaSession' in navigator) {
-      navigator.mediaSession.playbackState = 'playing'
-    }
-  })
-
-  onAudioEvent('pause', () => {
-    playing.value = false
-
-    if ('mediaSession' in navigator) {
-      navigator.mediaSession.playbackState = 'paused'
-    }
-  })
-
-  onAudioEvent('ended', () => {
-    playing.value = false
-  })
-})
 </script>
 
 <template>
@@ -65,13 +38,11 @@ onMounted(() => {
   
   <router-view/>
 
-  <audio
+  <audio 
     ref="audio"
-  ></audio>
-
-  <!-- 备用元素：从不接入 Web Audio，手机切后台时由 backgroundAudio 把播放平移过来走原生通道 -->
-  <audio
-    ref="bgAudio"
+    @play="playing = true"
+    @pause="playing = false"
+    @ended="playing = false"
   ></audio>
 
   <button class="block theme_button" @click="toggleTheme">

@@ -178,16 +178,6 @@ export function audioAnalyser(audio) {
     return analyser
 }
 
-// 手机切后台时 AudioContext 会被浏览器挂起，回前台后由 backgroundAudio 调用恢复
-export function resumeAudioContext() {
-
-    if (!audioContext || audioContext.state === 'running') {
-        return Promise.resolve()
-    }
-
-    return audioContext.resume().catch(() => {})
-}
-
 export function getFrequency() {
 
     if (!analyser) return null
