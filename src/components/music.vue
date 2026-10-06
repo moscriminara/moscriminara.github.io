@@ -3,6 +3,7 @@ import { ref, computed, inject, onMounted, onUnmounted } from 'vue'
 import tracks from '../data/tracks.json'
 import { audioAnalyser } from '../tools/audioAnalyser'
 import { startSpectrum } from '../tools/spectrum'
+import spectrumPanel from './spectrumPanel.vue'
 
 const audio = inject('audio')
 const playing = inject('playing')
@@ -258,6 +259,8 @@ onUnmounted(() => {
 
             </div>
         </div>
+
+        <spectrumPanel />
 
         <div class="block tracks">
 
