@@ -1,5 +1,5 @@
-# Vue 3 + Vite
+# ORIMATA's Portfolio
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This a portfolio built for demonstrating musical and other works.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+It has also included a music player and visualiser and some interesting tools. I will keep wokring on its functionality and performance optimisation so you can have much more fun with it ><
