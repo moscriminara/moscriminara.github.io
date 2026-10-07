@@ -298,6 +298,19 @@ export function getFrequency() {
 
     const spectrum = data.slice(0, tiltCurve.length)
 
+    // 静音（暂停后的衰减尾音、无声段）直接回零：tilt 是对信号的增益偏置，
+    // 不能把静音本身抬成一条静态曲线，否则没播放时画面上也一直挂着频谱
+    let silent = true
+
+    for (let i = 0; i < spectrum.length; i++) {
+        if (spectrum[i] > 0) {
+            silent = false
+            break
+        }
+    }
+
+    if (silent) return spectrum
+
     for (let i = 0; i < spectrum.length; i++) {
 
         // Uint8Array 赋值会回绕，必须先钳到 [0,255]；灵敏度是叠加 tilt 后的整体高度倍率

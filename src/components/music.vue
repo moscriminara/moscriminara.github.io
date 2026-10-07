@@ -2,7 +2,7 @@
 import { ref, computed, inject, onMounted, onUnmounted } from 'vue'
 import tracks from '../data/tracks.json'
 import { audioAnalyser } from '../tools/audioAnalyser'
-import { startSpectrum } from '../tools/spectrum'
+import { startSpectrum, stopSpectrum } from '../tools/spectrum'
 import spectrumPanel from './spectrumPanel.vue'
 
 const audio = inject('audio')
@@ -73,7 +73,6 @@ async function playTrack(
 
     if (!analyser.value) {
         analyser.value = audioAnalyser(audio.value)
-        startSpectrum(spectrumCanvas.value)
     }
 
     await audio.value.play()
@@ -205,6 +204,19 @@ function formatTime(seconds) {
 onMounted(() => {
     audio.value.addEventListener('ended', autoCoutinue)
     mediaSession()
+
+    // 频谱跟着真实播放状态走：开播才画，暂停/播完后在衰减归零处自动收掉
+    audio.value.addEventListener('play', () => {
+        startSpectrum(spectrumCanvas.value)
+    })
+
+    audio.value.addEventListener('pause', () => {
+        stopSpectrum()
+    })
+
+    audio.value.addEventListener('ended', () => {
+        stopSpectrum()
+    })
 
     audio.value.addEventListener('timeupdate', () => {
         currentTime.value = audio.value.currentTime
