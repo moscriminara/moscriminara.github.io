@@ -1,6 +1,6 @@
 ---
 title: Ice cream
-date: 4 Sept, 2026
+date: 4 Oct, 2026 | 8:14
 tag: feelings
 ---
 

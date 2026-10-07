@@ -8,8 +8,8 @@
             <router-link class="navigation_content" to="/post">
                 POSTS
             </router-link>
-            <router-link class="navigation_content" to="/music">
-                MUSIC
+            <router-link class="navigation_content" to="/player">
+                PLAYER
             </router-link>
             <router-link class="navigation_content" to="/gallery">
                 GALLERY

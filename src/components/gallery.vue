@@ -5,7 +5,7 @@
 <template>
     <section>
         <div class="block">
-            <h2>Gallery</h2>
+            <h2>Coming soon.</h2>
         </div>
     </section>
 </template>

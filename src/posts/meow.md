@@ -1,6 +1,6 @@
 ---
 title: meow
-date: 4 Sept, 2026
+date: 4 Oct, 2026 | 10:28
 tag: cats
 ---
 

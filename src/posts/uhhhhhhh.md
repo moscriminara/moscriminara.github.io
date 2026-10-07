@@ -1,6 +1,6 @@
 ---
 title: uhhhhhhh
-date: 4 Sept, 2026
+date: 4 Oct, 2026 | 21:49
 tag: feelings
 ---
 

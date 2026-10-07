@@ -4,19 +4,31 @@
             "platform": "Apple Music",
             "icon": "/platforms_icons/apple_music.png",
             "page": "https://music.apple.com/us/artist/moment-heun/1887738704",
-            "bg": "rgba(247, 18, 18, 0.084)"
+            "bg": "rgba(247, 18, 79, 0.104)"
         },
         {
             "platform": "Spotify",
             "icon": "platforms_icons/spotify.png",
             "page": "https://open.spotify.com/artist/5C7Adao4jwDH2mdjDVGuz4?si=qyEj3YKvTu-1EZt43DKVEQ",
-            "bg": "rgba(23, 255, 73, 0.084)"
+            "bg": "rgba(23, 255, 73, 0.104)"
         },
         {
             "platform": "SoundCloud",
             "icon": "platforms_icons/soundcloud.png",
             "page": "https://on.soundcloud.com/8AorbomzE4iKd9meYW",
-            "bg": "rgba(254, 120, 17, 0.084)"
+            "bg": "rgba(254, 120, 17, 0.104)"
+        },
+        {
+            "platform": "YouTube",
+            "icon": "platforms_icons/youtube.png",
+            "page": "https://www.youtube.com/@Moscriminara",
+            "bg": "rgba(247, 18, 18, 0.104)"
+        },
+        {
+            "platform": "X",
+            "icon": "platforms_icons/x.png",
+            "page": "https://x.com/moscriminara",
+            "bg": "rgba(0, 0, 0, 0.104)"
         }
     ]
 }

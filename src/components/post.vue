@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import { getMarkdownFolder } from '../data/md.js'
 
+
 const posts = getMarkdownFolder('posts')
 
 const selectedTag = ref(
@@ -9,7 +10,12 @@ const selectedTag = ref(
 )
 
 const filteredPosts = computed(() =>
-    posts.filter(post => post.tag === selectedTag.value)
+    posts
+        .filter(post => post.tag === selectedTag.value)
+        .sort((a, b) =>
+            new Date(b.date.replace('|','')) - 
+            new Date(a.date.replace('|',''))
+        )
 )
 
 function loadPosts(tag) {

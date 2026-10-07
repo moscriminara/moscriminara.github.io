@@ -654,10 +654,16 @@ span {
 .profile_info_container_1 {
   display: grid;
   grid-template-rows: 40% minmax(0, 1fr);
+  min-height: 400px;
+
+  @media (max-width: 1024px) {
+    grid-template-rows: 50% minmax(0, 1fr);
+  }
 }
 .profile_info_container_2 {
   display: grid;
   grid-template-rows: 50% minmax(0, 1fr);
+  min-height: 400px;
 }
 
 .profile_name {
@@ -694,6 +700,35 @@ span {
   letter-spacing: 10px;
 
   margin-top: 5px;
+}
+
+.profile_info p {
+  margin: 10px 15px;
+}
+.profile_info div {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.profile_icons {
+  width: 30px;
+  filter: contrast(10%);
+}
+
+.profile_img_block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+ 
+  overflow: hidden;
+}
+.profile_img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 100%;
 }
 
 .platforms {
@@ -766,6 +801,8 @@ span {
   -webkit-appearance: none;
 
   background: var(--progress);
+
+  border: none;
   border-radius: 10px;
 
   cursor: pointer;
@@ -788,6 +825,7 @@ span {
   min-width: 200px;
   height: 250px;
 
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;

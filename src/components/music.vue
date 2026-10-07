@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, inject, onMounted, onUnmounted } from 'vue'
 import tracks from '../data/tracks.json'
-import { audioAnalyser } from '../tools/audioAnalyser'
+import { audioAnalyser, getAudioContext } from '../tools/audioAnalyser'
 import { startSpectrum } from '../tools/spectrum'
 
 const audio = inject('audio')
@@ -75,7 +75,23 @@ async function playTrack(
         startSpectrum(spectrumCanvas.value)
     }
 
+    if ('audioSession' in navigator) {
+        navigator.audioSession.type = 'playback'
+    }
+
     await audio.value.play()
+}
+
+async function restoreAudioContext() {
+    if (document.visibilityState !== 'visible') return
+    if (!audio.value || audio.value.paused) return
+
+    const context = getAudioContext()
+
+    if (!context) return
+
+    await context.suspend()
+    await context.resume()
 }
 
 function togglePlay() {
@@ -202,6 +218,9 @@ function formatTime(seconds) {
 }
 
 onMounted(() => {
+
+    document.addEventListener('visibilitychange',restoreAudioContext)
+
     audio.value.addEventListener('ended', autoCoutinue)
     mediaSession()
 
@@ -281,24 +300,24 @@ onUnmounted(() => {
 
         <div class="block progress no_select">
 
-                <p>{{ formatTime(currentTime) }}</p>
+            <p>{{ formatTime(currentTime) }}</p>
 
-                <input
-                    type="range"
-                    min="0"
-                    :max="duration"
-                    step="0.01"
-                    :value="currentTime"
-                    @pointerdown="startSeek"
-                    @pointermove="moveSeek"
-                    @pointerup="endSeek"
-                    @pointercancel="endSeek"
-                    :style="{
-                        '--progress-percent': progressPercent + '%'
-                    }"
-                >
-                <p>{{ formatTime(duration) }}</p>
-                
-            </div>
+            <input
+                type="range"
+                min="0"
+                :max="duration"
+                step="0.01"
+                :value="currentTime"
+                @pointerdown="startSeek"
+                @pointermove="moveSeek"
+                @pointerup="endSeek"
+                @pointercancel="endSeek"
+                :style="{
+                    '--progress-percent': progressPercent + '%'
+                }"
+            >
+            <p>{{ formatTime(duration) }}</p>
+            
+        </div>
     </section>
 </template>
