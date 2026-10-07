@@ -2,9 +2,15 @@ import { getFrequency } from './audioAnalyser'
 
 let animationFrame = null
 
+// 暂停/结束后置位：循环继续把频谱画到自然衰减归零，再停掉并清屏，
+// 不立刻掐断（否则画面冻在半空），也不留下一直空转的 rAF
+let draining = false
+
 export function startSpectrum(canvas) {
 
     if (!canvas || animationFrame) return
+
+    draining = false
 
     const ctx = canvas.getContext('2d')
 
@@ -73,7 +79,26 @@ export function startSpectrum(canvas) {
 
         ctx.fill()
         ctx.stroke()
+
+        if (draining && isSilent(data)) {
+            cancelAnimationFrame(animationFrame)
+            animationFrame = null
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+        }
     }
 
     draw()
+}
+
+export function stopSpectrum() {
+    draining = true
+}
+
+function isSilent(data) {
+
+    for (let i = 0; i < data.length; i++) {
+        if (data[i] > 0) return false
+    }
+
+    return true
 }
