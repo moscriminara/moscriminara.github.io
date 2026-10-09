@@ -3,80 +3,80 @@
         {
             "title": "Shelter",
             "artist": "Porter Robinson & Madeon",
-            "cover": "/tracks/shelter/shelter.jpg",
-            "audio": "/tracks/shelter/shelter.mp3"
+            "cover": "https://rhyinstru.uk/tracks/shelter/shelter.jpg",
+            "audio": "https://rhyinstru.uk/tracks/shelter/shelter.mp3"
         },
         {
             "title": "Look at the Sky",
             "artist": "Porter Robinson",
-            "cover": "/tracks/look_at_the_sky/look_at_the_sky.jpg",
-            "audio": "/tracks/look_at_the_sky/look_at_the_sky.mp3"
+            "cover": "https://rhyinstru.uk/tracks/look_at_the_sky/look_at_the_sky.jpg",
+            "audio": "https://rhyinstru.uk/tracks/look_at_the_sky/look_at_the_sky.mp3"
         },
         {
             "title": "Floating Sense",
             "artist": "ORIMATA",
-            "cover": "/tracks/floating_sense/floating_sense.png",
-            "audio": "/tracks/floating_sense/floating_sense.wav"
+            "cover": "https://rhyinstru.uk/tracks/floating_sense/floating_sense.png",
+            "audio": "https://rhyinstru.uk/tracks/floating_sense/floating_sense.wav"
         },
         {
             "title": "Inverted Moon",
             "artist": "ORIMATA",
-            "cover": "/tracks/inverted_moon/inverted_moon.png",
-            "audio": "/tracks/inverted_moon/inverted_moon.wav"
+            "cover": "https://rhyinstru.uk/tracks/inverted_moon/inverted_moon.png",
+            "audio": "https://rhyinstru.uk/tracks/inverted_moon/inverted_moon.wav"
         },
         {
             "title": "Past of Life",
             "artist": "ORIMATA",
-            "cover": "/tracks/past_of_life/past_of_life.png",
-            "audio": "/tracks/past_of_life/past_of_life.wav"
+            "cover": "https://rhyinstru.uk/tracks/past_of_life/past_of_life.png",
+            "audio": "https://rhyinstru.uk/tracks/past_of_life/past_of_life.wav"
         },
         {
             "title": "BESIDE (DEMO)",
             "artist": "ORIMATA",
-            "cover": "/tracks/beside(demo)/beside.jpg",
-            "audio": "/tracks/beside(demo)/beside(demo).wav"
+            "cover": "https://rhyinstru.uk/tracks/beside(demo)/beside.jpg",
+            "audio": "https://rhyinstru.uk/tracks/beside(demo)/beside(demo).wav"
         },
         {
             "title": "SATTO (DEMO)",
             "artist": "ORIMATA",
             "cover": "/tracks/nobg.png",
-            "audio": "/tracks/satto(demo)/satto(demo).m4a"
+            "audio": "https://rhyinstru.uk/tracks/satto(demo)/satto(demo).m4a"
         },
         {
             "title": "Cold Morning, Warm Heart",
             "artist": "ORIMATA",
             "cover": "/tracks/nobg.png",
-            "audio": "/tracks/cmwh/cmwh.m4a"
+            "audio": "https://rhyinstru.uk/tracks/cmwh/cmwh.m4a"
         },
         {
             "title": "Theme",
             "artist": "ORIMATA",
             "cover": "/tracks/nobg.png",
-            "audio": "/tracks/theme/theme.m4a"
+            "audio": "https://rhyinstru.uk/tracks/theme/theme.m4a"
         },
         {
             "title": "Evidence",
             "artist": "ORIMATA",
             "cover": "/tracks/nobg.png",
-            "audio": "/tracks/evidence/evidence.m4a"
+            "audio": "https://rhyinstru.uk/tracks/evidence/evidence.m4a"
         },
         {
             "title": "Faded City",
             "artist": "ORIMATA",
             "cover": "/tracks/nobg.png",
-            "audio": "/tracks/faded_city/faded_city.m4a"
+            "audio": "https://rhyinstru.uk/tracks/faded_city/faded_city.m4a"
         },
         {
             "title": "Bridge (DEMO)",
             "artist": "ORIMATA",
             "cover": "/tracks/nobg.png",
-            "audio": "/tracks/bridge/bridge.wav"
+            "audio": "https://rhyinstru.uk/tracks/bridge/bridge.wav"
         },
         {
             "title": "Remember My Existence",
             "artist": "ORIMATA",
             "cover": "/tracks/nobg.png",
-            "audio": "/tracks/remember_my_existence/remember_my_existence.wav"
+            "audio": "https://rhyinstru.uk/tracks/remember_my_existence/remember_my_existence.wav"
         }
     ]
 }

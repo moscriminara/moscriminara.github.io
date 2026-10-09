@@ -4,6 +4,8 @@ import tracks from '../data/tracks.json'
 import { audioAnalyser, getAudioContext } from '../tools/audioAnalyser'
 import { startSpectrum } from '../tools/spectrum'
 
+const loading = inject('loading')
+
 const audio = inject('audio')
 const playing = inject('playing')
 const currentTrack = ref(null)
@@ -446,9 +448,11 @@ onUnmounted(() => {
 
                 <img 
                     class="player_icon"
-                    :src="playing
-                        ?'/player_icons/pause.png'
-                        :'/player_icons/play.png'"
+                    :src="loading
+                        ? '/loading_icons/loading.gif'
+                        :playing
+                            ?'/player_icons/pause.png'
+                            :'/player_icons/play.png'"
                     @click="togglePlay"
                 >
 

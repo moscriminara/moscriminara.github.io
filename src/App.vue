@@ -2,12 +2,16 @@
 import navigation from './components/navigation.vue';
 import { ref, provide } from 'vue'
 
+const loading = ref(false)
+
 const audio = ref(null)
 
 const playing = ref(false)
 const analyser = ref(null)
 
 const spectrumCanvas = ref(null)
+
+provide('loading', loading)
 
 provide('audio', audio)
 
@@ -40,9 +44,12 @@ function toggleTheme() {
 
   <audio 
     ref="audio"
-    @play="playing = true"
-    @pause="playing = false"
-    @ended="playing = false"
+    crossorigin="anonymous"
+    @waiting="loading = true"
+    @playing="loading = false; playing = true"
+    @pause="loading = false; playing = false"
+    @ended="loading = false; playing = false"
+    @error="loading = false"
   ></audio>
 
   <button class="block theme_button" @click="toggleTheme">
