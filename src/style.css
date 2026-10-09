@@ -738,18 +738,20 @@ span {
   
   height: 70px;
   overflow: hidden;
+
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.04);
+  }
+  &:active {
+    transform: scale(0.96);
+  }
 }
 .platforms_icons {
   width: 140px;
 }
 
-.tracks {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: flex-start;
-  padding-bottom: 60px;
-}
 
 .music_container {
   width: 100%;
@@ -820,18 +822,31 @@ span {
   height: 0;
 }
 
-.trackcard {
-  width: 200px;
-  min-width: 200px;
-  height: 250px;
-
-  position: relative;
+.tracks {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
 
-  text-align: center;
+  padding-bottom: 60px;
+}
+
+.track_info {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  
+  transition: all 0.3s ease;
+}
+
+.trackcard {
+  position: relative;
+  width: auto;
+  height: 70px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
 
   cursor: pointer;
 
@@ -839,15 +854,19 @@ span {
 
   transition: all 0.3s ease;
 
-  @media (max-width: 1024px) {
-    width: 140px;
-    min-width: 140px;
-    height: 190px;
+  &:hover {
+    transform: scale(1.01);
+  }
+  &:active {
+    transform: scale(0.99);
   }
 }
 .trackcard p {
-  margin: 0;
+  margin: 0 20px;
   width: 200px;
+  line-height: 15px;
+
+  transition: all 0.3s ease;
  
   @media (max-width: 1024px) {
     font-size: 13px;
@@ -860,19 +879,25 @@ span {
   }
 }
 
-.trackcover {
-  width: 170px;
-  margin: 7px;
-  border-radius: 10px;
-
-  @media (max-width: 1024px) {
-    width: 120px;
-  }
-}
-
-.track_active {
+.trackcard.track_active {
   box-shadow: 0 0 15px rgba(100, 100, 100, 0.5);
+  height: 100px;
 }
+
+.trackcover {
+  position: absolute;
+  z-index: -1;
+
+  width: 60%;
+  right: 0;
+
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    black 110%
+  );
+}
+
 
 .spectrum {
   width: 100%;

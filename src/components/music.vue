@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, inject, onMounted, onUnmounted } from 'vue'
+import { ref, computed, inject, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import tracks from '../data/tracks.json'
 import { audioAnalyser, getAudioContext } from '../tools/audioAnalyser'
 import { startSpectrum } from '../tools/spectrum'
@@ -217,23 +217,213 @@ function formatTime(seconds) {
     return `${minutes}:${secs.toString().padStart(2, '0')}`
 }
 
+
+const floatingStates = new Map()
+
+let animationFrame = null
+let lastFrameTime = null
+
+const FLOAT_SPEED = 0.02
+const RESET_SMOOTHNESS = 250
+
+function getCurrentY(img) {
+    const transform = getComputedStyle(img).transform
+
+    if (transform === 'none') return 0
+
+    return new DOMMatrixReadOnly(transform).m42
+}
+
+function getFloatingRange(img) {
+    const card = img.closest('.trackcard')
+
+    if (!card) return { top: 0, bottom: 0 }
+
+    const imageHeight = img.offsetHeight
+    const cardHeight = card.clientHeight
+    const originalTop = img.offsetTop
+
+    if (imageHeight <= cardHeight) {
+        return { top: 0, bottom: 0 }
+    }
+
+    return {
+        top: -originalTop,
+        bottom: cardHeight - imageHeight - originalTop + 1
+    }
+}
+
+function startFloating(img) {
+    if (!img) return
+
+    const existing = floatingStates.get(img)
+    const y = getCurrentY(img)
+
+    if (existing) {
+        if (!existing.active) {
+            existing.intro = true
+            existing.introStartY = existing.y
+            existing.introTime = 0
+            existing.phase = 0
+        }
+
+        existing.active = true
+        return
+    }
+
+    floatingStates.set(img, {
+        y,
+        active: true,
+        phase: 0,
+        intro: true,
+        introStartY: y,
+        introTime: 0
+    })
+
+    if (animationFrame === null) {
+        lastFrameTime = null
+        animationFrame = requestAnimationFrame(animateFloating)
+    }
+}
+
+function stopFloating(img) {
+    const state = floatingStates.get(img)
+    if (state) state.active = false
+}
+
+function animateFloating(timestamp) {
+    const dt = lastFrameTime === null
+        ? 0
+        : Math.min(timestamp - lastFrameTime, 50)
+
+    lastFrameTime = timestamp
+
+    for (const [img, state] of floatingStates) {
+        if (!img.isConnected) {
+            floatingStates.delete(img)
+            continue
+        }
+
+        const { top, bottom } = getFloatingRange(img)
+
+        if (state.active) {
+            const center = (top + bottom) / 2
+            const amplitude = (top - bottom) / 2
+
+            const duration = 50000
+
+            if (state.intro) {
+                const introDuration = 20000
+
+                state.introTime = Math.min(
+                    state.introTime + dt,
+                    introDuration
+                )
+
+                const t = state.introTime / introDuration
+
+                const eased = Math.pow(
+                    (1 - Math.cos(Math.PI * t)) / 2, 0.7
+                )
+
+                state.y = state.introStartY
+                    + (bottom - state.introStartY) * eased
+
+                if (t >= 1) {
+                    state.intro = false
+                    state.phase = -Math.PI / 2
+                }
+            } else {
+                state.phase += (Math.PI * 2 / duration) * dt
+                state.y = center + amplitude * Math.sin(state.phase)
+            }
+        } else {
+            const factor = 1 - Math.exp(-dt / RESET_SMOOTHNESS)
+
+            state.y += (0 - state.y) * factor
+
+            if (Math.abs(state.y) < 0.1) {
+                img.style.transform = ''
+                floatingStates.delete(img)
+                continue
+            }
+        }
+
+        img.style.transform = `translateY(${state.y}px)`
+    }
+
+    if (floatingStates.size > 0) {
+        animationFrame = requestAnimationFrame(animateFloating)
+    } else {
+        animationFrame = null
+        lastFrameTime = null
+    }
+}
+
+function updateFloating(card) {
+    const img = card.querySelector('.trackcover')
+    if (!img) return
+
+    const isActive = card.classList.contains('track_active')
+    const isHovered = card.matches(':hover')
+
+    if ((isActive && playing.value) || isHovered) {
+        startFloating(img)
+    } else {
+        stopFloating(img)
+    }
+}
+
+function updateAllFloating() {
+    document.querySelectorAll('.trackcard').forEach(updateFloating)
+}
+
+watch(
+    [currentTrack, playing],
+    async () => {
+        await nextTick()
+        updateAllFloating()
+    },
+    { flush: 'post' }
+)
+
+function updateTime() {
+    currentTime.value = audio.value.currentTime
+}
+
+function updateDuration() {
+    duration.value = audio.value.duration
+}
+
 onMounted(() => {
 
-    document.addEventListener('visibilitychange',restoreAudioContext)
+    document.addEventListener('visibilitychange', restoreAudioContext)
 
     audio.value.addEventListener('ended', autoCoutinue)
+    audio.value.addEventListener('timeupdate', updateTime)
+    audio.value.addEventListener('loadedmetadata', updateDuration)
+
     mediaSession()
-
-    audio.value.addEventListener('timeupdate', () => {
-        currentTime.value = audio.value.currentTime
-    })
-
-    audio.value.addEventListener('loadedmetadata', () => {
-        duration.value = audio.value.duration
-    })
 })
+
 onUnmounted(() => {
     audio.value.removeEventListener('ended', autoCoutinue)
+    audio.value.removeEventListener('timeupdate', updateTime)
+    audio.value.removeEventListener('loadedmetadata', updateDuration)
+
+    document.removeEventListener('visibilitychange', restoreAudioContext)
+
+    if (animationFrame !== null) {
+        cancelAnimationFrame(animationFrame)
+        animationFrame = null
+    }
+
+    for (const img of floatingStates.keys()) {
+        img.style.transform = ''
+    }
+
+    floatingStates.clear()
+    lastFrameTime = null
 })
 
 </script>
@@ -288,11 +478,19 @@ onUnmounted(() => {
                 :class="{
                     'track_active': currentTrack?.title === item.title
                 }"
+                @mouseenter="updateFloating($event.currentTarget)"
+                @mouseleave="updateFloating($event.currentTarget)"
             >
-
+                <div
+                    class="track_info"
+                    :class="{
+                        'track_info_active': currentTrack?.title === item.title
+                    }"
+                >
+                    <p>{{ item.title }}</p>
+                    <p><span>{{ item.artist }}</span></p>
+                </div>
                 <img :src="item.cover" class="trackcover">
-                <p>{{ item.title }}</p>
-                <p><span>{{ item.artist }}</span></p>
 
             </div>
 
