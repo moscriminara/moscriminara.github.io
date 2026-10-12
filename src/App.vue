@@ -2,43 +2,41 @@
 import navigation from './components/navigation.vue';
 import { ref, provide } from 'vue'
 
+const showNavi = ref(false)
 const loading = ref(false)
-
 const audio = ref(null)
-
 const playing = ref(false)
 const analyser = ref(null)
-
 const spectrumCanvas = ref(null)
 
 provide('loading', loading)
-
 provide('audio', audio)
-
 provide('playing', playing)
 provide('analyser', analyser)
 provide('spectrumCanvas', spectrumCanvas)
 
-const theme = ref(
-  localStorage.getItem('theme') === 'dark'
-)
-
-document.documentElement.dataset.theme =
-  theme.value ? 'dark' : 'light'
-
-function toggleTheme() {
-  theme.value = !theme.value
-
-  const currentTheme = theme.value ? 'dark' : 'light'
-
-  document.documentElement.dataset.theme = currentTheme
-  localStorage.setItem('theme', currentTheme)
+function toggleNavi() {
+  showNavi.value = !showNavi.value
 }
 </script>
 
 <template>
   <img class="home_img" src="/cherryblossom.png" alt="Cherry blossom">
-  <navigation />
+
+  <transition name="navi">
+    <div
+      v-if="showNavi"
+      class="navi_backdrop"
+      @click="showNavi = false"
+    />
+  </transition>
+  
+  <transition name="navi">
+    <navigation 
+      v-if="showNavi" 
+      @close="showNavi = false"
+    />
+  </transition>
   
   <router-view/>
 
@@ -52,8 +50,8 @@ function toggleTheme() {
     @error="loading = false"
   ></audio>
 
-  <button class="block theme_button" @click="toggleTheme">
-      {{ theme ? "☀": "⏾" }}
+  <button class="block navi_button" @click="toggleNavi">
+    MENU
   </button>
 
   <canvas ref="spectrumCanvas" class="spectrum"></canvas>

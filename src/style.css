@@ -342,23 +342,17 @@ span {
 /*-----Navigation-----*/
 .navigation {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   position: fixed;
   z-index: 10;
-  bottom: 0;
 
-  width: 100%;
-  padding-left: 20px;
-  padding-bottom: 40px;
+  height: 100%;
 
-  background: linear-gradient(
-    0deg,
-    var(--bg) 0%,
-    transparent 100%
-  );
+  padding: 5% 0;
 
   @media (max-width: 1024px) {
     overflow: auto;
-    padding: 10px 0;
   }
 }
 
@@ -370,18 +364,18 @@ span {
   font-size: 18px;
   
   text-decoration: none;
-  text-align: center;
 
-  padding: 20px;
-  margin: 20px;
+  padding: 50px;
+  margin-left: 30px;
   width: 100px;
+
+  flex-shrink: 0;
 
   transition: 0.3s ease;
 
   @media (max-width: 1024px) {
-    padding: 10px;
-    margin-top: 0;
-    margin-bottom: 30px;
+    padding: 40px;
+    padding-left: 20px;
   }
 }
 
@@ -389,13 +383,55 @@ span {
   font-family: var(--heading);
   width: 80px;
 
+  position: absolute;
+  right: 40px;
+}
+
+.navi_button {
+  font-family: var(--heading);
+  width: 100px;
+  height: 30px;
+
   position: fixed;
   bottom: 0;
 
   left: 50%;
   transform: translateX(-50%);
+}
 
-  z-index: 10;
+.navi_backdrop {
+  position: fixed;
+  inset: 0;
+
+  z-index: 9;
+
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  background: linear-gradient(
+    0deg,
+    var(--bg) 0%,
+    transparent 100%
+  );
+}
+
+.navi-enter-active,
+.navi-leave-active {
+  transition:
+    opacity 0.3s ease;
+  
+  z-index: 9999;
+}
+
+.navi-enter-from,
+.navi-leave-to {
+  opacity: 0;
+}
+
+.navi-enter-to,
+.navi-leave-from {
+  opacity: 1;
 }
 /*----------*/
 
@@ -493,16 +529,16 @@ span {
 
 .display_window {
   position: fixed;
-  top: 50px;
-  bottom: 140px;
-  left: 50px;
-  right: 240px;
+  top: 40px;
+  bottom: 40px;
+  left: 40px;
+  right: 220px;
 
   overflow: auto;
 
   @media (max-width: 1024px) {
     top: 10px;
-    bottom: 100px;
+    bottom: 40px;
     left: 10px;
     right: 10px;
   }
@@ -852,7 +888,7 @@ span {
 
   overflow: hidden;
 
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
 
   &:hover {
     transform: scale(1.01);
@@ -884,6 +920,10 @@ span {
   height: 100px;
 }
 
+.trackcard.track_active .trackcover {
+    width: 65%;
+}
+
 .trackcover {
   position: absolute;
   z-index: -1;
@@ -896,6 +936,8 @@ span {
     transparent 0%,
     black 110%
   );
+
+  transition: width 0.5s ease;
 }
 
 
