@@ -54,5 +54,7 @@ function toggleNavi() {
     MENU
   </button>
 
-  <canvas ref="spectrumCanvas" class="spectrum"></canvas>
+  <div class="spectrum_container">
+    <canvas ref="spectrumCanvas" class="spectrum"></canvas>
+  </div>
 </template>

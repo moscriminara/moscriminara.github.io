@@ -63,7 +63,6 @@ async function playTrack(
                 }
             ]
         })
-
         navigator.mediaSession.playbackState = 'playing'
     }
 
@@ -225,7 +224,6 @@ const floatingStates = new Map()
 let animationFrame = null
 let lastFrameTime = null
 
-const FLOAT_SPEED = 0.02
 const RESET_SMOOTHNESS = 250
 
 function getCurrentY(img) {
@@ -399,7 +397,9 @@ function updateDuration() {
 
 onMounted(() => {
 
-    document.addEventListener('visibilitychange', restoreAudioContext)
+    if (window.matchMedia('(max-width: 1024px)').matches) {
+        document.addEventListener('visibilitychange', restoreAudioContext)
+    }
 
     audio.value.addEventListener('ended', autoCoutinue)
     audio.value.addEventListener('timeupdate', updateTime)
@@ -449,7 +449,7 @@ onUnmounted(() => {
                 <img 
                     class="player_icon"
                     :src="loading
-                        ? '/loading_icons/loading.gif'
+                        ?'/loading_icons/loading.gif'
                         :playing
                             ?'/player_icons/pause.png'
                             :'/player_icons/play.png'"

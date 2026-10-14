@@ -6,6 +6,7 @@ import App from './App.vue'
 import Home from './components/home.vue'
 import Post from './components/post.vue'
 import Player from './components/music.vue'
+import Tools from './components/tools.vue'
 import Gallery from './components/gallery.vue'
 import Profile from './components/profile.vue'
 
@@ -21,6 +22,10 @@ const routes = [
             {
                 path: 'player',
                 component: Player
+            },
+            {
+                path: 'tools',
+                component: Tools
             },
             {
                 path: 'gallery',
