@@ -29,29 +29,41 @@ function loadPosts(tag) {
         <div class="block">
             <div class="block_navi">
                 <list>
-                    <h2 @click="loadPosts('logs')">Logs</h2>
-                    <h2 @click="loadPosts('releases')">Releases</h2>
-                    <h2 @click="loadPosts('feelings')">Feelings</h2>
-                    <h2 @click="loadPosts('advices')">Advices</h2>
-                    <h2 @click="loadPosts('cats')">Cats</h2>
+                    <h2 @click="loadPosts('logs')">logs</h2>
+                    <h2 @click="loadPosts('releases')">releases</h2>
+                    <h2 @click="loadPosts('feelings')">feelings</h2>
+                    <h2 @click="loadPosts('advices')">advices</h2>
+                    <h2 @click="loadPosts('cats')">cats</h2>
                 </list>
             </div>
         </div>
 
         <div class="block">
 
-            <article
-                v-for="post in filteredPosts"
+            <template
+                v-for="(post, index) in filteredPosts"
                 :key="post.title"
-                class="block"
-                :class="{ 'post-open': selectedPost === post.title }"
-                @click="openPost(post)"
             >
-                <h1>{{ post.title }}</h1>
-                <p><span>{{ post.date }}</span></p>
 
-                <div v-html="post.content"></div>
-            </article>
+                <article
+     
+                    :class="{ 'post-open': selectedPost === post.title }"
+                    @click="openPost(post)"
+                >
+                    <h1>{{ post.title }}</h1>
+                    <p><span>{{ post.date }}</span></p>
+
+                    <div v-html="post.content"></div>
+                </article>
+
+                <div
+                    v-if="index < filteredPosts.length"
+                    class="horizontal_line"
+                ></div>
+
+            </template>
+            
+            <p class="nothing">to be continue...</p>
 
             <p v-if="filteredPosts.length === 0" class="nothing">
                 Nothing yet...

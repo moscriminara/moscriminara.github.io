@@ -1,0 +1,54 @@
+
+[
+    {
+        "id": 1,
+        "fortune": "Great Blessing",
+        "japanese": "大吉",
+        "oracle": {
+            "content": "Beyond the clouds, the morning sun awaits.",
+            "explain": "The hardships of yesterday are coming to an end. Like the morning sun emerging from the clouds, a brighter path is opening before you. Trust in your efforts and welcome the opportunities ahead."
+        },
+        "guidance": {
+            "wish": "Wishes shall be fulfilled, with great fortune ahead.",
+            "love": "A wonderful connection awaits, bringing warmth and happiness.",
+            "awaited_person": "The awaited person shall arrive with joyful news.",
+            "studies": "Diligent efforts shall be rewarded with excellent results.",
+            "business": "New opportunities shall bring growth and prosperity.",
+            "travel": "A pleasant journey awaits, filled with joy and good fortune."
+        }
+    },
+    {
+        "id": 2,
+        "fortune": "Blessing",
+        "japanese": "吉",
+        "oracle": {
+            "content": "A gentle breeze carries the seeds of tomorrow.",
+            "explain": "New opportunities may arrive in unexpected ways. Like seeds carried by the wind, even the smallest encounters can grow into something meaningful. Welcome change with courage, but remember that every beginning requires care."
+        },
+        "guidance": {
+            "wish": "Wishes may be fulfilled when opportunities are embraced.",
+            "love": "A meaningful connection may blossom with time and sincerity.",
+            "awaited_person": "The awaited person shall arrive, though later than expected.",
+            "studies": "Consistent efforts shall lead to steady progress and success.",
+            "business": "New opportunities may bring success through careful decisions.",
+            "travel": "A favourable journey awaits, with unexpected moments of joy."
+        }
+    },
+    {
+        "id": 3,
+        "fortune": "Middle Blessing",
+        "japanese": "中吉",
+        "oracle": {
+            "content": "The quiet river finds its way to the sea.",
+            "explain": "The path ahead may not always be clear, and progress may seem slower than expected. Yet, like a river flowing steadily towards the sea, each small step brings you closer to your destination. Trust the passage of time and do not let impatience disturb your journey."
+        },
+        "guidance": {
+            "wish": "Wishes may be fulfilled through time and patience.",
+            "love": "A connection may deepen gradually through mutual understanding.",
+            "awaited_person": "The awaited person may be delayed, patience is advised.",
+            "studies": "Steady progress is expected despite occasional challenges.",
+            "business": "Gradual improvement is expected, with caution against unnecessary risks.",
+            "travel": "A favourable journey is possible with careful preparation."
+        }
+    }
+]

@@ -10,6 +10,9 @@ import Tools from './components/tools.vue'
 import Gallery from './components/gallery.vue'
 import Profile from './components/profile.vue'
 
+import Omikuji from './components/omikuji.vue'
+import Weather from './components/weather.vue'
+
 const routes = [
     { 
         path:'/', 
@@ -25,7 +28,17 @@ const routes = [
             },
             {
                 path: 'tools',
-                component: Tools
+                component: Tools,
+                children: [
+                    {
+                        path: 'omikuji',
+                        component: Omikuji
+                    },
+                    {
+                        path: 'weather',
+                        component: Weather
+                    }
+                ]
             },
             {
                 path: 'gallery',

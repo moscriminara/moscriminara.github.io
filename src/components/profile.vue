@@ -21,7 +21,7 @@ import platforms from '../data/platforms.json'
 
                         <p>
                             Currently making music for individuals, game soundtracks 
-                            and collaborative albums/EPs. Genres includes 
+                            and collaborative albums/EPs. Genres include 
                             <u>Contemporary Classical</u>, 
                             <u>Ambient</u>, 
                             <u>Trance</u>,

@@ -1,6 +1,20 @@
 <script setup>
 import navigation from './components/navigation.vue';
-import { ref, provide } from 'vue'
+import { ref, provide, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+
+const route = useRoute()
+const router = useRouter()
+
+const parentPath = computed(() => {
+    const segments = route.path.split('/').filter(Boolean)
+
+    if (segments.length <= 1) return null
+
+    segments.pop()
+
+    return '/' + segments.join('/')
+})
 
 const showNavi = ref(false)
 const loading = ref(false)
@@ -17,6 +31,12 @@ provide('spectrumCanvas', spectrumCanvas)
 
 function toggleNavi() {
   showNavi.value = !showNavi.value
+}
+
+function goParent() {
+    if (parentPath.value) {
+        router.push(parentPath.value)
+    }
 }
 </script>
 
@@ -50,11 +70,22 @@ function toggleNavi() {
     @error="loading = false"
   ></audio>
 
-  <button class="block navi_button" @click="toggleNavi">
-    MENU
-  </button>
-
   <div class="spectrum_container">
     <canvas ref="spectrumCanvas" class="spectrum"></canvas>
+  </div>
+
+  <div class="buttom_bar">
+
+    <button 
+      class="block navi_button"
+      v-if="parentPath"
+      @click="goParent"
+    >
+      <
+    </button>
+
+    <button class="block navi_button" @click="toggleNavi">
+      menu
+    </button>
   </div>
 </template>

@@ -432,7 +432,65 @@ onUnmounted(() => {
 
 <template>
     <section class="music_container">
- 
+
+        <div class="block">
+            <div class="tracks">
+
+                <template v-for="(item, index) in tracks.track" :key="item.title">
+                    <div 
+                        class="trackcard"
+                        @click="playTrack(item)"
+                        :class="{
+                            'track_active': currentTrack?.title === item.title
+                        }"
+                        @mouseenter="updateFloating($event.currentTarget)"
+                        @mouseleave="updateFloating($event.currentTarget)"
+                    >
+                        <div
+                            class="track_info"
+                            :class="{
+                                'track_info_active': currentTrack?.title === item.title
+                            }"
+                        >
+                            <p>{{ item.title }}</p>
+                            <p><span>{{ item.artist }}</span></p>
+                        </div>
+                        <img :src="item.cover" class="trackcover">
+
+                    </div>
+
+                    <div
+                        v-if="index < tracks.track.length - 1"
+                        class="horizontal_line"
+                    ></div>
+
+                </template>
+            </div>
+
+        </div>
+
+        <div class="block progress no_select">
+
+            <p>{{ formatTime(currentTime) }}</p>
+
+            <input
+                type="range"
+                min="0"
+                :max="duration"
+                step="0.01"
+                :value="currentTime"
+                @pointerdown="startSeek"
+                @pointermove="moveSeek"
+                @pointerup="endSeek"
+                @pointercancel="endSeek"
+                :style="{
+                    '--progress-percent': progressPercent + '%'
+                }"
+            >
+            <p>{{ formatTime(duration) }}</p>
+            
+        </div>
+
         <div class="block">
             <div class="player">
                 <img
@@ -470,56 +528,6 @@ onUnmounted(() => {
                 >
 
             </div>
-        </div>
-
-        <div class="block tracks">
-
-            <div 
-                class="block trackcard"
-                v-for="item in tracks.track"
-                :key="item.title"
-                @click="playTrack(item)"
-                :class="{
-                    'track_active': currentTrack?.title === item.title
-                }"
-                @mouseenter="updateFloating($event.currentTarget)"
-                @mouseleave="updateFloating($event.currentTarget)"
-            >
-                <div
-                    class="track_info"
-                    :class="{
-                        'track_info_active': currentTrack?.title === item.title
-                    }"
-                >
-                    <p>{{ item.title }}</p>
-                    <p><span>{{ item.artist }}</span></p>
-                </div>
-                <img :src="item.cover" class="trackcover">
-
-            </div>
-
-        </div>
-
-        <div class="block progress no_select">
-
-            <p>{{ formatTime(currentTime) }}</p>
-
-            <input
-                type="range"
-                min="0"
-                :max="duration"
-                step="0.01"
-                :value="currentTime"
-                @pointerdown="startSeek"
-                @pointermove="moveSeek"
-                @pointerup="endSeek"
-                @pointercancel="endSeek"
-                :style="{
-                    '--progress-percent': progressPercent + '%'
-                }"
-            >
-            <p>{{ formatTime(duration) }}</p>
-            
         </div>
     </section>
 </template>

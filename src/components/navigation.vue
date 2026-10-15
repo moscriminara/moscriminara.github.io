@@ -30,23 +30,23 @@ function toggleTheme() {
     <section class="navi_container">
         <nav class="navigation" @click="handleNaviClick">
             <router-link class="navigation_content" to="/post">
-                POSTS
+                post
             </router-link>
 
             <router-link class="navigation_content" to="/player">
-                PLAYER
+                player
             </router-link>
 
             <router-link class="navigation_content" to="/tools">
-                TOOLS
+                tools
             </router-link>
 
             <router-link class="navigation_content" to="/gallery">
-                GALLERY
+                gallery
             </router-link>
 
             <router-link class="navigation_content" to="/profile">
-                PROFILE
+                profile
             </router-link>
 
             <button class="block theme_button" @click="toggleTheme">
