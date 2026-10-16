@@ -15,7 +15,13 @@ const branch = 'main'
 const password = ref('')
 const authenticated = ref(localStorage.getItem('orimata_admin_auth') === 'true')
 const loginError = ref(false)
-const token = ref('')
+const token = ref(localStorage.getItem('orimata_github_token') || '')
+
+watch(token, value => {
+  const next = value.trim()
+  if (next) localStorage.setItem('orimata_github_token', next)
+  else localStorage.removeItem('orimata_github_token')
+})
 const showConnection = ref(false)
 const activeTab = ref('posts')
 const busy = ref(false)
@@ -71,7 +77,13 @@ function splitPost(text) {
   return { frontmatter, title: read('title'), tag: read('tag') || 'logs', date: read('date'), body }
 }
 function quoteYaml(value) {
-  return JSON.stringify(String(value))
+  const text = String(value ?? '')
+  // Keep normal title, tag and date values unquoted for the existing md.js parser.
+  // Only quote YAML values that cannot safely be expressed as plain scalars.
+  if (!text || /^[-?:,\[\]{}#&*!|>'"%@`]/.test(text) || /:\s|\s#|[\r\n]|\s$|^\s/.test(text) || /^(true|false|null|~|yes|no)$/i.test(text)) {
+    return JSON.stringify(text)
+  }
+  return text
 }
 function updatePostSource() {
   const previous = splitPost(editorText.value)
@@ -94,9 +106,11 @@ function readPostFields(text) {
 }
 function currentPostDate() {
   const now = new Date()
-  const date = [now.getFullYear(), String(now.getMonth() + 1).padStart(2, '0'), String(now.getDate()).padStart(2, '0')].join('-')
+  const day = now.getDate()
+  const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][now.getMonth()]
+  const year = now.getFullYear()
   const time = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`
-  return `${date} | ${time}`
+  return `${day} ${month}, ${year} | ${time}`
 }
 async function hashPassword(value) {
   const data = new TextEncoder().encode(value)
@@ -116,7 +130,7 @@ function logout() {
   if (!allowLeave()) return
   authenticated.value = false
   localStorage.removeItem('orimata_admin_auth')
-  token.value = ''
+  // Keep the stored GitHub token so next login does not require entering it again.
   clearEditor()
 }
 function alertMessage(message, error = false) {
