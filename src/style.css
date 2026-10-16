@@ -30,6 +30,8 @@
   --progress: #08060d32;
   --progress-played: #08060d66;
 
+  --img-viwer-bg: rgba(255, 255, 255, 0.15);
+
   font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
   color-scheme: light;
@@ -71,6 +73,8 @@
 
   --progress: #f1edf532;
   --progress-played: #f1edf566;
+
+  --img-viwer-bg: rgba(0, 0, 0, 0.15);
 
   color-scheme: dark;
 }
@@ -391,8 +395,8 @@ span {
 .block.theme_button {
   font-family: var(--heading);
 
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
 
   margin: 0;
   padding: 0;
@@ -627,6 +631,86 @@ span {
   }
 }
 
+.post_article {
+  margin: 25px 0;
+}
+
+.markdown_body img {
+    cursor: zoom-in;
+    transition: filter 0.3s ease;
+}
+
+.markdown_body img:hover {
+    filter: brightness(0.85);
+}
+
+.image_viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background: var(--img-viwer-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.image_viewer img {
+  display: block;
+
+  max-width: 90vw;
+  max-height: 85dvh;
+
+  width: auto;
+  height: auto;
+  object-fit: contain;
+
+  transform-origin: center center;
+
+  transition: none;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+
+  cursor: zoom-in;
+}
+
+.image_viewer img.is-dragging {
+    cursor: grabbing;
+}
+
+.image_close {
+  position: absolute;
+  top: 25px;
+  right: 30px;
+
+  border: none;
+  background: transparent;
+  color: white;
+
+  font-size: 32px;
+  cursor: pointer;
+}
+
+.image-viewer-enter-active,
+.image-viewer-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.image-viewer-enter-from,
+.image-viewer-leave-to {
+  opacity: 0;
+}
+
 .block {
   background: var(--glass);
   backdrop-filter: blur(20px);
@@ -709,6 +793,103 @@ span {
     user-select: none;
     -webkit-user-select: none;
 }
+
+.markdown_body {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+
+    padding: 0 20px;
+
+    font-family: var(--heading);
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--post-text);
+
+    overflow-wrap: anywhere;
+}
+
+.block .markdown_body p {
+    margin: 0 0 16px;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+}
+
+.block .markdown_body h1,
+.block .markdown_body h2,
+.block .markdown_body h3 {
+    margin: 28px 0 14px;
+
+    font-family: var(--heading);
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.block .markdown_body h1 {
+    font-size: 24px;
+}
+
+.block .markdown_body h2 {
+    font-size: 20px;
+}
+
+.block .markdown_body h3 {
+    font-size: 17px;
+}
+
+.markdown_body img {
+  display: block;
+
+  max-width: 50%;
+  width: auto;
+  height: auto;
+  margin-bottom: 20px;
+
+  border-radius: 5px;
+  object-fit: contain;
+}
+
+.markdown_body a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.markdown_body ul,
+.markdown_body ol {
+  margin: 12px 0 20px;
+  padding-left: 28px;
+}
+
+.markdown_body li {
+  margin-bottom: 6px;
+}
+
+.markdown_body blockquote {
+  margin: 20px 0;
+  padding: 8px 20px;
+
+  border-left: 2px solid var(--accent);
+  background: var(--glass);
+}
+
+.markdown_body pre {
+  max-width: 100%;
+  padding: 16px;
+
+  overflow-x: auto;
+
+  background: var(--code-bg);
+  border-radius: 8px;
+}
+
+.markdown_body hr {
+  border: none;
+  border-top: 1px solid var(--progress);
+  margin: 28px 0;
+}
+
 
 .profile_container {
   width: 100%;
@@ -1085,11 +1266,9 @@ span {
   );
 }
 
-.tools-enter-active {
-  transition: opacity 0.2s ease;
-}
+.tools-enter-active,
 .tools-leave-active {
-    transition: opacity 0.3s ease;
+    transition: opacity 0.2s ease;
 }
 
 .tools-enter-from,
@@ -1181,4 +1360,40 @@ span {
 
 .omikuji-leave-to {
     opacity: 0;
+}
+
+.great_blessing {
+  text-shadow:
+    0 0 10px rgba(255, 210, 110, 0.65),
+    0 0 24px rgba(255, 190, 80, 0.45);
+}
+.middle_blessing {
+  text-shadow:
+    0 0 10px rgba(255, 225, 160, 0.60),
+    0 0 24px rgba(240, 200, 120, 0.40);
+}
+.small_blessing {
+  text-shadow:
+    0 0 10px rgba(195, 165, 255, 0.60),
+    0 0 24px rgba(165, 135, 235, 0.40);
+}
+.blessing {
+  text-shadow:
+    0 0 10px rgba(150, 190, 255, 0.60),
+    0 0 24px rgba(120, 165, 240, 0.40);
+}
+.future_blessing {
+  text-shadow:
+    0 0 10px rgba(130, 205, 195, 0.55),
+    0 0 24px rgba(100, 175, 165, 0.35);
+}
+.bad_fortune {
+  text-shadow:
+    0 0 10px rgba(235, 125, 145, 0.60),
+    0 0 24px rgba(210, 90, 115, 0.40);
+}
+.great_misfortune {
+  text-shadow:
+    0 0 10px rgba(255, 65, 75, 0.70),
+    0 0 24px rgba(200, 35, 55, 0.50);
 }

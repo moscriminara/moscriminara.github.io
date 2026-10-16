@@ -50,5 +50,73 @@
             "business": "Gradual improvement is expected, with caution against unnecessary risks.",
             "travel": "A favourable journey is possible with careful preparation."
         }
+    },
+        {
+        "id": 4,
+        "fortune": "Small Blessing",
+        "japanese": "小吉",
+        "oracle": {
+            "content": "A single flower blooms beneath the fading winter sky.",
+            "explain": "Fortune may arrive quietly, hidden within the smallest moments of everyday life. Like a solitary flower blooming in the lingering cold, even the slightest hope can bring warmth to an uncertain future. Do not overlook the little joys around you, for they may become the beginning of something beautiful."
+        },
+        "guidance": {
+            "wish": "Small wishes may be fulfilled, while greater hopes require patience.",
+            "love": "A gentle connection may blossom through kindness and sincerity.",
+            "awaited_person": "The awaited person may arrive quietly, though later than hoped.",
+            "studies": "Modest progress is expected through patience and consistent effort.",
+            "business": "Small gains are possible, but caution is advised in new ventures.",
+            "travel": "A peaceful journey awaits, though careful planning is recommended."
+        }
+    },
+    {
+        "id": 5,
+        "fortune": "Future Blessing",
+        "japanese": "末吉",
+        "oracle": {
+            "content": "Beyond the longest night, a distant light remains.",
+            "explain": "The present may feel uncertain, and the answers you seek may remain beyond your reach. Yet, like a distant light shining through the darkness, hope has not disappeared. What seems impossible today may gradually become possible with the passage of time. Do not rush towards tomorrow, for even the longest night must eventually give way to dawn."
+        },
+        "guidance": {
+            "wish": "Wishes may remain unfulfilled for now, but hope lies ahead.",
+            "love": "A meaningful connection may emerge when the time is right.",
+            "awaited_person": "The awaited person shall be delayed, but a reunion remains possible.",
+            "studies": "Progress may be slow, yet perseverance shall bring improvement.",
+            "business": "Success may come later, patience and careful decisions are advised.",
+            "travel": "Delays may occur, but a favourable journey awaits in time."
+        }
+    },
+    {
+        "id": 6,
+        "fortune": "Bad Fortune",
+        "japanese": "凶",
+        "oracle": {
+            "content": "The falling rain conceals the path beneath your feet.",
+            "explain": "Uncertainty may cloud your judgement, and the road ahead may bring unexpected difficulties. Like a traveller wandering beneath the rain, moving forward without direction may lead you further from where you wish to be. Take time to reflect upon your choices and seek shelter when the storm grows stronger. Even the heaviest rain cannot fall forever."
+        },
+        "guidance": {
+            "wish": "Wishes may face obstacles, patience and reconsideration are advised.",
+            "love": "Misunderstandings may arise, avoid hasty words and decisions.",
+            "awaited_person": "The awaited person may not arrive as expected, patience is necessary.",
+            "studies": "Difficulties may hinder progress, greater focus and preparation are required.",
+            "business": "Unfavourable circumstances are possible, avoid unnecessary risks.",
+            "travel": "Unexpected difficulties may arise, postponement is recommended."
+        }
+    },
+    {
+        "id": 7,
+        "fortune": "Great Misfortune",
+        "japanese": "大凶",
+        "oracle": {
+            "content": "When the last star fades, the silent sky awaits the dawn.",
+            "explain": "A difficult path may lie before you, and even familiar hopes may seem distant beneath the weight of uncertainty. Like a traveller beneath a starless sky, you may struggle to recognise the way forward. Do not allow despair to guide your footsteps, nor mistake the darkness of this moment for the end of your journey. Rest when you must, protect what remains precious, and remember that even a sky without stars may welcome the morning sun."
+        },
+        "guidance": {
+            "wish": "Wishes are unlikely to be fulfilled at present, reconsider your path.",
+            "love": "Emotional difficulties may arise, avoid forcing connections that bring sorrow.",
+            "awaited_person": "The awaited person is unlikely to arrive soon, do not depend upon their return.",
+            "studies": "Significant challenges may arise, return to fundamentals and proceed carefully.",
+            "business": "Unfavourable outcomes are possible, major decisions and risks should be avoided.",
+            "travel": "An unfavourable journey is indicated, postponement is strongly advised."
+        }
     }
 ]

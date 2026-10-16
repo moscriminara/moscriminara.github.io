@@ -1,5 +1,10 @@
 import { marked } from 'marked'
 
+marked.setOptions({
+    breaks: true,
+    gfm: true
+})
+
 const files = import.meta.glob('../**/*.md', {
     eager: true,
     query: '?raw',

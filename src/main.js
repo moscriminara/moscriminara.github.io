@@ -10,6 +10,8 @@ import Tools from './components/tools.vue'
 import Gallery from './components/gallery.vue'
 import Profile from './components/profile.vue'
 
+import Admin from './components/admin.vue'
+
 import Omikuji from './components/omikuji.vue'
 import Weather from './components/weather.vue'
 
@@ -49,6 +51,11 @@ const routes = [
                 component: Profile
             }
         ]
+    },
+    {
+        path: '/admin',
+        name: 'admin',
+        component: Admin
     }
 ]
 

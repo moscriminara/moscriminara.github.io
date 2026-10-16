@@ -17,16 +17,16 @@ function getToday() {
 
 const saved = JSON.parse(localStorage.getItem('omikuji_daily') || 'null')
 
-if (saved && saved.date === getToday()) {
-    result.value = omikuji.find(item => item.id === saved.id) || null
-}
+// if (saved && saved.date === getToday()) {
+//     result.value = omikuji.find(item => item.id === saved.id) || null
+// }
 
 function drawOmikuji() {
-    if (localStorage.getItem('omikuji_daily')) {
-        const record = JSON.parse(localStorage.getItem('omikuji_daily'))
+    // if (localStorage.getItem('omikuji_daily')) {
+    //     const record = JSON.parse(localStorage.getItem('omikuji_daily'))
 
-        if (record.date === getToday()) return
-    }
+    //     if (record.date === getToday()) return
+    // }
 
     const index = Math.floor(Math.random() * omikuji.length)
     result.value = omikuji[index]
@@ -59,7 +59,19 @@ function drawOmikuji() {
                             OMIKUJI - NO.{{ String(result.id).padStart(3, '0') }}
                         </span>
                     </p>
-                    <h1>{{ result.fortune }}</h1>
+                    <h1
+                        :class="{
+                            'great_blessing': result.fortune === 'Great Blessing',
+                            'middle_blessing': result.fortune === 'Middle Blessing',
+                            'small_blessing': result.fortune === 'Small Blessing',
+                            'blessing': result.fortune === 'Blessing',
+                            'future_blessing': result.fortune === 'Future Blessing',
+                            'bad_fortune': result.fortune === 'Bad Fortune',
+                            'great_misfortune': result.fortune === 'Great Misfortune',
+                        }"
+                    >
+                        {{ result.fortune }}
+                    </h1>
                     <p>{{ result.japanese }}</p>
                 </div>
 
