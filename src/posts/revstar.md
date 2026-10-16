@@ -1,19 +1,17 @@
 ---
-title: Sand Field
-date: 5 Oct, 2026 | 12:10
-tag: releases
+title: "Sand Field"
+date: "2026-10-17 | 05:14"
+tag: "releases"
 ---
 
-New album Sand Field will be released in this year.
+New album Sand Field will be released in this year. This album will include following tracks:
 
-This album will include following tracks:
-
-> I
-> Sea of Stars
-> Memories
-> MIDI
-> Past of Life
-> Inverted Moon
-> Song of Poem
+- I
+- Sea of Stars
+- Memories
+- MIDI
+- Past of Life
+- Inverted Moon
+- Song of Poem
 
 Past of Life and Inverted Moon are now available on <u>Player</u>.
