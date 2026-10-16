@@ -851,4 +851,76 @@ watch(editorText, () => {
     flex-basis: 135px;
   }
 }
+
+/* Mobile only: one vertical scrollbar for the entire editing window.
+   The file strip stays naturally sized, with horizontal scrolling only. */
+@media (max-width: 1024px) {
+  .admin_workspace {
+    grid-template-rows: auto minmax(0, 1fr);
+    overflow: hidden;
+  }
+
+  .admin_main {
+    min-height: 0;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin_content {
+    flex: 0 0 auto;
+    min-height: auto;
+    overflow: visible;
+  }
+
+  .admin_posts_layout {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .admin_filelist {
+    flex: 0 0 auto;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    border-right: 0;
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .admin_fileitems {
+    flex: 0 0 auto;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    align-items: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    padding-bottom: 8px;
+  }
+
+  .admin_editorpane,
+  .admin_single_editor {
+    flex: 0 0 auto;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    overscroll-behavior: auto;
+  }
+
+  .admin_markdown_preview {
+    flex: 0 0 auto;
+    min-height: 180px;
+    overflow: visible;
+  }
+
+  .admin_status {
+    flex: 0 0 auto;
+  }
+}
 </style>
