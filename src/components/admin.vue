@@ -47,6 +47,7 @@ const postTag = ref('logs')
 const postTitle = ref('')
 const postBody = ref('')
 const postDate = ref('')
+const isExistingPost = ref(false)
 const postPreview = ref(false)
 const markdownHtml = computed(() => marked.parse(postBody.value, { breaks: true }))
 const musicIndex = ref(0)
@@ -148,6 +149,7 @@ function clearEditor() {
   postTitle.value = ''
   postBody.value = ''
   postDate.value = ''
+  isExistingPost.value = false
 }
 function urlFor(path, refQuery = false) {
   const encoded = path.split('/').map(encodeURIComponent).join('/')
@@ -224,7 +226,10 @@ async function loadFile(path) {
     savedText.value = content
     if (activeTab.value === 'music') musicIndex.value = 0
     if (activeTab.value === 'omikuji') fortuneIndex.value = 0
-    if (activeTab.value === 'posts') readPostFields(content)
+    if (activeTab.value === 'posts') {
+      readPostFields(content)
+      isExistingPost.value = true
+    }
   } catch (err) { alertMessage(`Could not open file: ${err.message}`, true) }
   finally { busy.value = false }
 }
@@ -258,6 +263,7 @@ function newPost() {
   postTitle.value = 'New Post'
   postBody.value = ''
   postDate.value = ''
+  isExistingPost.value = false
   editorText.value = ''
   updatePostSource()
   savedText.value = ''
@@ -284,7 +290,10 @@ async function importLocalFile(event) {
       currentSha.value = currentPath.value === importedPreviousPath ? importedPreviousSha : null
     }
     editorText.value = text
-    if (activeTab.value === 'posts') readPostFields(text)
+    if (activeTab.value === 'posts') {
+      readPostFields(text)
+      isExistingPost.value = false // The server checks if the path already exists on Publish.
+    }
     savedText.value = ''
     alertMessage('Local file imported as a draft. Review it, then publish.')
   } catch (err) { alertMessage(`Import failed: ${err.message}`, true) }
@@ -293,14 +302,19 @@ async function save() {
   if (!currentPath.value) return alertMessage('Open or create a file first.', true)
   if (!token.value.trim()) return alertMessage('Enter a GitHub token to publish.', true)
   if (isJson.value && !parsedJson.value) return alertMessage('Invalid JSON. Please fix it before publishing.', true)
-  if (activeTab.value === 'posts') {
-    if (!postTitle.value.trim()) return alertMessage('Please enter a title.', true)
-    postDate.value = currentPostDate()
-    updatePostSource()
+  if (activeTab.value === 'posts' && !postTitle.value.trim()) {
+    return alertMessage('Please enter a title.', true)
   }
   busy.value = true
   try {
     const writeSha = await getWriteSha(currentPath.value)
+    if (activeTab.value === 'posts') {
+      // Only a genuinely new GitHub file gets a fresh publication timestamp.
+      // Existing files use the editable DATE field, unchanged by default.
+      if (!writeSha) postDate.value = currentPostDate()
+      if (!postDate.value.trim()) throw new Error('Please enter a date.')
+      updatePostSource()
+    }
     const result = await api(urlFor(currentPath.value), {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -315,6 +329,7 @@ async function save() {
     savedText.value = editorText.value
     alertMessage('Published to GitHub. Your Pages deployment may take a moment.')
     if (activeTab.value === 'posts') {
+      isExistingPost.value = true
       const path = currentPath.value
       deletedPosts.delete(path)
       publishedPosts.add(path)
@@ -497,8 +512,13 @@ watch(editorText, () => {
                           <option v-for="tag in ['logs','releases','feelings','advices','cats']" :key="tag" :value="tag">{{ tag }}</option>
                         </select>
                       </label>
-                      <label>DATE (AUTOMATIC ON PUBLISH)
-                        <input :value="postDate || 'Set automatically on Publish'" readonly>
+                      <label>{{ isExistingPost ? 'DATE (EDITABLE)' : 'DATE (AUTOMATIC FOR NEW POSTS)' }}
+                        <input
+                          v-model="postDate"
+                          :readonly="!isExistingPost"
+                          :placeholder="isExistingPost ? 'e.g. 4 Oct, 2026 | 10:09' : 'Set automatically on Publish'"
+                          @input="updatePostSource"
+                        >
                       </label>
                     </div>
                     <div class="admin_editor_modes">
