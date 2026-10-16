@@ -2,10 +2,11 @@
 import { ref, computed, watch, onMounted } from 'vue'
 import { marked } from 'marked'
 
-// Build-time post index: Vite includes filenames without loading the Markdown bodies.
-const bundledPosts = import.meta.glob('/src/posts/**/*.md')
+const bundledPosts = import.meta.glob('/src/posts/**/*.md', {
+    query: '?raw',
+    import: 'default'
+})
 
-// ORIMATA · Admin
 const passwordHash = '098459456589301e60f9ecaa1c74d3b5c987f48ba541d889cf83793e910b43e9'
 const owner = 'moscriminara'
 const repo = 'orimata'
