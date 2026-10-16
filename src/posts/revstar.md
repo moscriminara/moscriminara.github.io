@@ -1,7 +1,7 @@
 ---
-title: "Sand Field"
-date: "2026-10-17 | 05:14"
-tag: "releases"
+title: Sand Field
+date: 17 Oct, 2026 | 05:42
+tag: releases
 ---
 
 New album Sand Field will be released in this year. This album will include following tracks:
@@ -14,4 +14,4 @@ New album Sand Field will be released in this year. This album will include foll
 - Inverted Moon
 - Song of Poem
 
-Past of Life and Inverted Moon are now available on <u>Player</u>.
+Past of Life and Inverted Moon are now available on Player.
