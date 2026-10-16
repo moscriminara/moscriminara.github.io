@@ -107,8 +107,8 @@ function readPostFields(text) {
 }
 function currentPostDate() {
   const now = new Date()
-  const day = now.getDate()
-  const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][now.getMonth()]
+  const day = String(now.getDate()).padStart(2, '0')
+  const month = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'][now.getMonth()]
   const year = now.getFullYear()
   const time = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`
   return `${day} ${month}, ${year} | ${time}`
@@ -309,9 +309,9 @@ async function save() {
   try {
     const writeSha = await getWriteSha(currentPath.value)
     if (activeTab.value === 'posts') {
-      // Only a genuinely new GitHub file gets a fresh publication timestamp.
-      // Existing files use the editable DATE field, unchanged by default.
-      if (!writeSha) postDate.value = currentPostDate()
+      // New posts use the entered date, or the current time if left blank.
+      // Existing posts retain their editable original date.
+      if (!writeSha && !postDate.value.trim()) postDate.value = currentPostDate()
       if (!postDate.value.trim()) throw new Error('Please enter a date.')
       updatePostSource()
     }
@@ -512,11 +512,10 @@ watch(editorText, () => {
                           <option v-for="tag in ['logs','releases','feelings','advices','cats']" :key="tag" :value="tag">{{ tag }}</option>
                         </select>
                       </label>
-                      <label>{{ isExistingPost ? 'DATE (EDITABLE)' : 'DATE (AUTOMATIC FOR NEW POSTS)' }}
+                      <label>{{ isExistingPost ? 'DATE (EDITABLE)' : 'DATE (OPTIONAL — AUTO IF EMPTY)' }}
                         <input
                           v-model="postDate"
-                          :readonly="!isExistingPost"
-                          :placeholder="isExistingPost ? 'e.g. 4 Oct, 2026 | 10:09' : 'Set automatically on Publish'"
+                          :placeholder="isExistingPost ? 'e.g. 09 oct, 2009 | 10:09' : 'Leave empty for current time'"
                           @input="updatePostSource"
                         >
                       </label>
