@@ -554,6 +554,7 @@ span {
 
 .horizontal_line {
   width: auto;
+  align-self: stretch;
 
   border: none;
   border-top: 1px solid var(--progress);
@@ -1398,3 +1399,247 @@ span {
     0 0 10px rgba(255, 65, 75, 0.70),
     0 0 24px rgba(200, 35, 55, 0.50);
 }
+
+
+.weather {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.weather_search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+
+  margin: 10px 0;
+}
+
+.weather .block {
+  width: 50%;
+  margin: 10px 0;
+  @media (max-width: 1024px) {
+    align-self: stretch;
+    width: auto;
+    margin: 10px;
+  }
+  overflow: hidden;
+}
+
+.weather .nothing {
+  font-size: 12px;
+}
+
+.input {
+  padding: 15px 0;
+  font-size: 20px;
+  width: 100%;
+  padding-left: 10px;
+
+  background: none;
+  border: none;
+  outline: none;
+}
+
+.weather_info {
+  margin: 10px 0 30px;
+}
+
+.weather_load {
+  margin: 10px 0;
+}
+
+.weather_select {
+  font-family: var(--heading);
+  font-size: 10px;
+  color: var(--text-h);
+
+  background: var(--glass);
+  border: 1px solid var(--progress);
+  border-radius: 10px;
+
+  padding: 10px 10px;
+  margin-right: 10px;
+
+  cursor: pointer;
+  outline: none;
+}
+
+.temp {
+  text-align: center;
+}
+.temp h1 {
+  font-size: 60px;
+  line-height: 1.6;
+  margin: 0;
+}
+.temp h2 {
+  font-size: 20px;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.weather_timeline {
+  width: 100%;
+  min-width: 0;
+
+  margin: 20px 0;
+}
+
+.timeline_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timeline_content {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  
+}
+
+.timeline_item {
+  flex: 0 0 100px;
+  text-align: center;
+}
+
+.weather_timeline {
+  width: 100%;
+  min-width: 0;
+}
+
+.timeline_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timeline_content {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.weather_chart {
+  display: block;
+  max-width: none;
+}
+
+.chart_grid {
+  stroke: var(--progress);
+  stroke-width: 1;
+}
+
+.chart_label {
+  fill: var(--text);
+  font-size: 13px;
+  font-family: var(--heading);
+}
+
+.chart_line {
+  fill: none;
+  stroke: var(--text-h);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.chart_point {
+  fill: var(--bg);
+  stroke: var(--text-h);
+  stroke-width: 2;
+}
+
+.timeline_item {
+  flex: 0 0 100px;
+  text-align: center;
+}
+
+.chart_now_line {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 5;
+}
+
+.chart_now_label {
+  fill: var(--accent);
+  font-size: 14px;
+  font-family: var(--heading);
+}
+
+.chart_average_line {
+  stroke: var(--text-h);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 5;
+  opacity: 0.6;
+}
+
+.chart_bar {
+  transition:
+    fill 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.chart_bar.above_average {
+  fill: var(--progress-played);
+  opacity: 0.8;
+}
+
+.chart_bar.below_average {
+  fill: var(--progress-played);
+  opacity: 0.5;
+}
+
+.chart_bar:hover {
+  opacity: 1;
+}
+
+.chart_tooltip {
+  pointer-events: none;
+}
+
+.tooltip_background {
+  fill: var(--progress-played);
+}
+
+.tooltip_text {
+  fill: var(--bg);
+  font-size: 12px;
+  font-family: var(--heading);
+}
+
+.weather_result {
+  width: 100%;
+}
+
+.weather_sum-enter-active,
+.weather_sum-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.weather_sum-enter-from,
+.weather_sum-leave-to {
+  opacity: 0;
+}
+
+.weather-enter-active {
+  transition: opacity 1s ease;
+}
+
+.weather-enter-active > div {
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+
+  transition-delay:
+    calc((sibling-index() - 1) * 0.2s);
+}
+
+.weather-enter-from > div {
+  opacity: 0;
+  transform: translateY(10px);
+}
+

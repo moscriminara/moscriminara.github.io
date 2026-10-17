@@ -5,6 +5,16 @@ import omikuji from '../data/omikuji.json'
 const result = ref(null)
 const today = ref(getToday())
 
+function formatDate(date) {
+  const [year, month, day] = date.split('-')
+
+  const monthName = new Date(
+    2000, Number(month) - 1, 1
+  ).toLocaleString('en-GB', { month: 'short' })
+
+  return `${Number(day)} ${monthName}, ${year}`
+}
+
 function getToday() {
     const date = new Date()
 
@@ -66,7 +76,7 @@ function drawOmikuji() {
                             'small_blessing': result.fortune === 'Small Blessing',
                             'blessing': result.fortune === 'Blessing',
                             'future_blessing': result.fortune === 'Future Blessing',
-                            'bad_fortune': result.fortune === 'Bad Fortune',
+                            'bad_fortune': result.fortune === 'Misfortune',
                             'great_misfortune': result.fortune === 'Great Misfortune',
                         }"
                     >
@@ -131,7 +141,7 @@ function drawOmikuji() {
 
                 <div class="horizontal_line"></div>
 
-                <p class="nothing">another fortune awaits tomorrow | {{ today }}</p>
+                <p class="nothing">another fortune awaits tomorrow | {{ formatDate(today) }}</p>
 
             </div>
         </transition>
