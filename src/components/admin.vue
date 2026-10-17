@@ -43,6 +43,8 @@ const editorText = ref('')
 const savedText = ref('')
 const newFilename = ref('')
 const search = ref('')
+const musicSearch = ref('')
+const fortuneSearch = ref('')
 const postTag = ref('logs')
 const postTitle = ref('')
 const postBody = ref('')
@@ -61,6 +63,12 @@ const isDirty = computed(() => editorText.value !== savedText.value)
 const isJson = computed(() => activeTab.value !== 'posts')
 const selectedFileName = computed(() => currentPath.value.split('/').pop() || 'Untitled')
 const filteredFiles = computed(() => files.value.filter(f => f.name.toLowerCase().includes(search.value.toLowerCase())))
+const filteredTracks = computed(() => musicTracks.value
+  .map((track, index) => ({ track, index }))
+  .filter(({ track }) => `${track.title ?? ''} ${track.artist ?? ''}`.toLowerCase().includes(musicSearch.value.trim().toLowerCase())))
+const filteredFortunes = computed(() => (Array.isArray(parsedJson.value) ? parsedJson.value : [])
+  .map((fortune, index) => ({ fortune, index }))
+  .filter(({ fortune }) => `${fortune.id ?? ''} ${fortune.fortune ?? ''} ${fortune.japanese ?? ''}`.toLowerCase().includes(fortuneSearch.value.trim().toLowerCase())))
 
 // Keep the existing frontmatter structure and any additional metadata intact.
 function splitPost(text) {
@@ -108,7 +116,7 @@ function readPostFields(text) {
 function currentPostDate() {
   const now = new Date()
   const day = String(now.getDate()).padStart(2, '0')
-  const month = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'][now.getMonth()]
+  const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][now.getMonth()]
   const year = now.getFullYear()
   const time = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`
   return `${day} ${month}, ${year} | ${time}`
@@ -537,12 +545,13 @@ watch(editorText, () => {
               <div v-else-if="activeTab === 'music'" class="admin_posts_layout">
                 <div class="admin_filelist">
                   <div class="admin_list_header"><strong>Tracks</strong><span>{{ musicTracks.length }}</span></div>
+                  <input v-model="musicSearch" placeholder="Search tracks..." aria-label="Search tracks">
                   <div class="admin_fileitems">
-                    <button v-for="(track, index) in musicTracks" :key="index" type="button"
+                    <button v-for="{ track, index } in filteredTracks" :key="index" type="button"
                       :class="{ selected: musicIndex === index }" @click="musicIndex = index">
                       {{ track.title || `Track ${index + 1}` }}
                     </button>
-                    <p v-if="!musicTracks.length" class="admin_hint">No tracks found.</p>
+                    <p v-if="!filteredTracks.length" class="admin_hint">{{ musicTracks.length ? 'No matching tracks.' : 'No tracks found.' }}</p>
                   </div>
                   <div class="admin_newpost">
                     <button type="button" :disabled="!Array.isArray(parsedJson?.track)" @click="addTrack">+ New track</button>
@@ -577,12 +586,13 @@ watch(editorText, () => {
               <div v-else class="admin_posts_layout">
                 <div class="admin_filelist">
                   <div class="admin_list_header"><strong>Fortunes</strong><span>{{ Array.isArray(parsedJson) ? parsedJson.length : 0 }}</span></div>
+                  <input v-model="fortuneSearch" placeholder="Search fortunes..." aria-label="Search fortunes">
                   <div class="admin_fileitems">
-                    <button v-for="(fortune, index) in (Array.isArray(parsedJson) ? parsedJson : [])" :key="fortune.id ?? index" type="button"
+                    <button v-for="{ fortune, index } in filteredFortunes" :key="fortune.id ?? index" type="button"
                       :class="{ selected: fortuneIndex === index }" @click="fortuneIndex = index">
                       {{ String(fortune.id ?? index + 1).padStart(3, '0') }} / {{ fortune.japanese || fortune.fortune }}
                     </button>
-                    <p v-if="!Array.isArray(parsedJson) || !parsedJson.length" class="admin_hint">No fortunes found.</p>
+                    <p v-if="!filteredFortunes.length" class="admin_hint">{{ Array.isArray(parsedJson) && parsedJson.length ? 'No matching fortunes.' : 'No fortunes found.' }}</p>
                   </div>
                   <div class="admin_newpost">
                     <button type="button" :disabled="!Array.isArray(parsedJson)" @click="addFortune(); fortuneIndex = parsedJson.length - 1">+ New fortune</button>
@@ -674,6 +684,11 @@ watch(editorText, () => {
 .admin_fileitems { display: flex; flex-direction: column; gap: 4px; overflow-y: auto; min-height: 0; flex: 1; }
 .admin_fileitems button { text-align: left; overflow-wrap: anywhere; padding: 10px; font-size: 12px; }
 .admin_filelist .admin_hint { margin: 10px; }
+/* Desktop: always reserve space for roughly three list entries. */
+@media (min-width: 1025px) {
+  .admin_filelist { overflow-y: auto; }
+  .admin_fileitems { min-height: 128px; flex: 1 0 128px; }
+}
 .admin_import { display: inline-flex; justify-content: center; align-items: center; text-align: center; border: 1px solid var(--glass-border); border-radius: 9px; cursor: pointer; padding: 10px 15px; font-size: 12px; }
 .admin_import:hover { background: var(--accent-bg); border-color: var(--accent-border); }
 .admin_import input { display: none; }
@@ -709,7 +724,7 @@ watch(editorText, () => {
 .admin_fortune_form > .admin_danger { align-self: flex-start; }
 .admin_rawjson { border-top: 1px solid var(--glass-border); padding-top: 14px; }
 .admin_rawjson summary { cursor: pointer; font-size: 12px; margin-bottom: 12px; }
-.admin_status { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--glass-border); padding: 12px 26px; font: 11px var(--mono); opacity: .8; }
+.admin_status { display: flex; flex-shrink: 0; justify-content: space-between; gap: 12px; border-top: 1px solid var(--glass-border); padding: 12px 26px; font: 11px var(--mono); opacity: .8; }
 @media (max-width: 1024px) {
   .admin_workspace { top: 10px; bottom: 40px; left: 10px; right: 10px; }
   .admin_post_fields { grid-template-columns: minmax(0,1fr); }
@@ -863,16 +878,17 @@ watch(editorText, () => {
   .admin_main {
     min-height: 0;
     height: 100%;
+    overflow: hidden;
+  }
+
+  /* Scroll the workspace content, not the footer/status bar. */
+  .admin_content {
+    flex: 1 1 0;
+    min-height: 0;
     overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior-y: contain;
     -webkit-overflow-scrolling: touch;
-  }
-
-  .admin_content {
-    flex: 0 0 auto;
-    min-height: auto;
-    overflow: visible;
   }
 
   .admin_posts_layout {
@@ -921,6 +937,7 @@ watch(editorText, () => {
 
   .admin_status {
     flex: 0 0 auto;
+    margin-top: auto;
   }
 }
 </style>
