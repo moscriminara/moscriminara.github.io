@@ -1,4 +1,3 @@
-
 [
     {
         "id": 1,
@@ -51,7 +50,7 @@
             "travel": "A favourable journey is possible with careful preparation."
         }
     },
-        {
+    {
         "id": 4,
         "fortune": "Small Blessing",
         "japanese": "小吉",
@@ -116,6 +115,125 @@
             "awaited_person": "The awaited person is unlikely to arrive soon, do not depend upon their return.",
             "studies": "Significant challenges may arise, return to fundamentals and proceed carefully.",
             "business": "Unfavourable outcomes are possible, major decisions and risks should be avoided.",
+            "travel": "An unfavourable journey is indicated, postponement is strongly advised."
+        }
+    },
+    {
+        "id": 8,
+        "fortune": "Great Blessing",
+        "japanese": "大吉",
+        "oracle": {
+            "content": "A thousand stars gather to illuminate a single wish.",
+            "explain": "The scattered pieces of hope are finally coming together. Fortune shines upon the path ahead, bringing long-awaited happiness and new beginnings."
+        },
+        "guidance": {
+            "wish": "Wishes shall be fulfilled, with unexpected blessings to follow.",
+            "love": "A precious connection shall bring lasting warmth and happiness.",
+            "awaited_person": "The awaited person shall arrive soon, bringing wonderful news.",
+            "studies": "Great achievements await, and dedication shall be generously rewarded.",
+            "business": "Prosperity and success await, with excellent opportunities ahead.",
+            "travel": "An excellent journey awaits, filled with delightful discoveries."
+        }
+    },
+    {
+        "id": 9,
+        "fortune": "Blessing",
+        "japanese": "吉",
+        "oracle": {
+            "content": "The spring rain awakens a garden of forgotten dreams.",
+            "explain": "Hopes once left behind may find a chance to flourish again. Welcome the gentle changes ahead, for fortune often grows where patience has taken root."
+        },
+        "guidance": {
+            "wish": "Wishes are likely to be fulfilled through sincere efforts.",
+            "love": "Affection may deepen, bringing happiness through mutual trust.",
+            "awaited_person": "The awaited person shall arrive with favourable news.",
+            "studies": "Efforts shall bring rewarding results and growing confidence.",
+            "business": "Favourable opportunities may lead to steady prosperity.",
+            "travel": "A joyful journey is expected, with pleasant encounters along the way."
+        }
+    },
+    {
+        "id": 10,
+        "fortune": "Middle Blessing",
+        "japanese": "中吉",
+        "oracle": {
+            "content": "Between the mountains, a hidden path follows the moonlight.",
+            "explain": "The way forward may reveal itself slowly, but each careful step carries meaning. Trust in quiet progress rather than seeking immediate answers."
+        },
+        "guidance": {
+            "wish": "Wishes may be fulfilled gradually, with patience and persistence.",
+            "love": "Mutual understanding shall grow through honest communication.",
+            "awaited_person": "The awaited person may arrive after a short delay.",
+            "studies": "Consistent preparation shall bring satisfactory results.",
+            "business": "Moderate gains are expected through thoughtful decisions.",
+            "travel": "A pleasant journey is possible with sufficient preparation."
+        }
+    },
+    {
+        "id": 11,
+        "fortune": "Small Blessing",
+        "japanese": "小吉",
+        "oracle": {
+            "content": "A fragile lantern glows beside the sleeping sea.",
+            "explain": "Even when the world seems still, a small light of fortune remains. Protect the little happiness already found, and allow it to grow naturally."
+        },
+        "guidance": {
+            "wish": "Small wishes may come true, while greater hopes require time.",
+            "love": "Quiet affection may develop through patience and gentle care.",
+            "awaited_person": "The awaited person may arrive later than anticipated.",
+            "studies": "Small improvements are expected through continued effort.",
+            "business": "Modest gains are possible, but unnecessary risks should be avoided.",
+            "travel": "A peaceful journey is possible, though minor delays may occur."
+        }
+    },
+    {
+        "id": 12,
+        "fortune": "Future Blessing",
+        "japanese": "末吉",
+        "oracle": {
+            "content": "Beneath the fallen leaves, the roots remember spring.",
+            "explain": "What appears lost may only be resting beyond sight. Although fortune is distant, patient efforts may eventually bring a new beginning."
+        },
+        "guidance": {
+            "wish": "Wishes may remain distant, but fulfilment is possible in time.",
+            "love": "A connection may face uncertainty, allow feelings to develop naturally.",
+            "awaited_person": "The awaited person may be delayed, but news may arrive eventually.",
+            "studies": "Progress may remain slow, yet persistence shall bring improvement.",
+            "business": "Favourable results may come later, avoid rushing important decisions.",
+            "travel": "Postponement may be beneficial until circumstances improve."
+        }
+    },
+    {
+        "id": 13,
+        "fortune": "Bad Fortune",
+        "japanese": "凶",
+        "oracle": {
+            "content": "A broken compass trembles beneath the wandering clouds.",
+            "explain": "Uncertain choices may lead away from the intended destination. Avoid unnecessary risks and seek clarity before continuing the journey."
+        },
+        "guidance": {
+            "wish": "Wishes may encounter difficulties, reconsideration is advised.",
+            "love": "Uncertainty may cause misunderstandings, patience is necessary.",
+            "awaited_person": "The awaited person may not arrive as expected.",
+            "studies": "Distractions may hinder progress, greater discipline is required.",
+            "business": "Unfavourable developments are possible, avoid major risks.",
+            "travel": "Unexpected obstacles may arise, postponement is recommended."
+        }
+    },
+    {
+        "id": 14,
+        "fortune": "Great Misfortune",
+        "japanese": "大凶",
+        "oracle": {
+            "content": "The final candle fades within a house of endless winter.",
+            "explain": "A season of hardship may test even the strongest hopes. Guard what remains precious, for survival through the cold is itself a form of courage."
+        },
+        "guidance": {
+            "wish": "Wishes are unlikely to be fulfilled, abandon unreasonable expectations.",
+            "love": "Painful misunderstandings may arise, avoid pursuing uncertain affections.",
+            "awaited_person": "The awaited person is unlikely to return in the foreseeable future.",
+            "studies": "Serious difficulties may arise, reconsider existing methods and priorities.",
+            "business": "Significant losses are possible, avoid major commitments and investments.",
             "travel": "An unfavourable journey is indicated, postponement is strongly advised."
         }
     }
