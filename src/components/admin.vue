@@ -289,6 +289,40 @@ async function importLocalFile(event) {
   try {
     const text = await file.text()
     if (activeTab.value !== 'posts') JSON.parse(text)
+    if (activeTab.value === 'omikuji') {
+      const incoming = JSON.parse(text)
+      const existing = parsedJson.value
+      if (!Array.isArray(incoming) || !incoming.every(item => item && typeof item === 'object' && !Array.isArray(item))) {
+        throw new Error('Omikuji import must be a JSON array of fortune objects.')
+      }
+      if (!Array.isArray(existing)) {
+        throw new Error('Load the existing omikuji.json before importing additional fortunes.')
+      }
+      if (!incoming.length) return alertMessage('No fortunes found in the imported file.', true)
+
+      // Retain every existing fortune. Reassign incoming IDs only when they conflict.
+      const merged = [...existing]
+      const usedIds = new Set(existing.map(item => String(item.id)))
+      let nextId = Math.max(0, ...existing.map(item => Number(item.id) || 0),
+        ...incoming.map(item => Number(item.id) || 0)) + 1
+      let reassigned = 0
+      for (const fortune of incoming) {
+        const copy = structuredClone(fortune)
+        if (copy.id == null || usedIds.has(String(copy.id))) {
+          while (usedIds.has(String(nextId))) nextId++
+          copy.id = nextId++
+          reassigned++
+        }
+        usedIds.add(String(copy.id))
+        merged.push(copy)
+      }
+      const startIndex = existing.length
+      editorText.value = JSON.stringify(merged, null, 4)
+      fortuneIndex.value = startIndex
+      fortuneSearch.value = ''
+      alertMessage(`Appended ${incoming.length} fortune(s) as a draft.${reassigned ? ` Reassigned ${reassigned} conflicting ID(s).` : ''} Review and publish to save.`)
+      return
+    }
     if (activeTab.value === 'posts') {
       currentPath.value = `${paths.value.posts.replace(/\/$/, '')}/${file.name}`
       currentSha.value = null

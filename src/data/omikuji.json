@@ -6,7 +6,7 @@
         "japanese": "大吉",
         "oracle": {
             "content": "Beyond the clouds, the morning sun awaits.",
-            "explain": "The hardships of yesterday are coming to an end. Like the morning sun emerging from the clouds, a brighter path is opening before you. Trust in your efforts and welcome the opportunities ahead."
+            "explain": "Yesterday's hardships are fading away. Like the morning sun beyond the clouds, a brighter future awaits."
         },
         "guidance": {
             "wish": "Wishes shall be fulfilled, with great fortune ahead.",
@@ -23,7 +23,7 @@
         "japanese": "吉",
         "oracle": {
             "content": "A gentle breeze carries the seeds of tomorrow.",
-            "explain": "New opportunities may arrive in unexpected ways. Like seeds carried by the wind, even the smallest encounters can grow into something meaningful. Welcome change with courage, but remember that every beginning requires care."
+            "explain": "New opportunities may arrive unexpectedly. Even the smallest encounters can grow into something beautiful with time and care."
         },
         "guidance": {
             "wish": "Wishes may be fulfilled when opportunities are embraced.",
@@ -40,7 +40,7 @@
         "japanese": "中吉",
         "oracle": {
             "content": "The quiet river finds its way to the sea.",
-            "explain": "The path ahead may not always be clear, and progress may seem slower than expected. Yet, like a river flowing steadily towards the sea, each small step brings you closer to your destination. Trust the passage of time and do not let impatience disturb your journey."
+            "explain": "The path ahead may seem uncertain, but every small step brings progress. Like a river reaching the sea, patience shall lead the way."
         },
         "guidance": {
             "wish": "Wishes may be fulfilled through time and patience.",
@@ -57,7 +57,7 @@
         "japanese": "小吉",
         "oracle": {
             "content": "A single flower blooms beneath the fading winter sky.",
-            "explain": "Fortune may arrive quietly, hidden within the smallest moments of everyday life. Like a solitary flower blooming in the lingering cold, even the slightest hope can bring warmth to an uncertain future. Do not overlook the little joys around you, for they may become the beginning of something beautiful."
+            "explain": "Fortune often hides within the smallest moments. Even a fragile hope can blossom into something beautiful."
         },
         "guidance": {
             "wish": "Small wishes may be fulfilled, while greater hopes require patience.",
@@ -74,7 +74,7 @@
         "japanese": "末吉",
         "oracle": {
             "content": "Beyond the longest night, a distant light remains.",
-            "explain": "The present may feel uncertain, and the answers you seek may remain beyond your reach. Yet, like a distant light shining through the darkness, hope has not disappeared. What seems impossible today may gradually become possible with the passage of time. Do not rush towards tomorrow, for even the longest night must eventually give way to dawn."
+            "explain": "The answers may remain distant, but hope has not disappeared. Even the longest night must eventually surrender to dawn."
         },
         "guidance": {
             "wish": "Wishes may remain unfulfilled for now, but hope lies ahead.",
@@ -91,7 +91,7 @@
         "japanese": "凶",
         "oracle": {
             "content": "The falling rain conceals the path beneath your feet.",
-            "explain": "Uncertainty may cloud your judgement, and the road ahead may bring unexpected difficulties. Like a traveller wandering beneath the rain, moving forward without direction may lead you further from where you wish to be. Take time to reflect upon your choices and seek shelter when the storm grows stronger. Even the heaviest rain cannot fall forever."
+            "explain": "Uncertainty may obscure the path ahead. Seek clarity before moving forward, for even the heaviest rain must eventually cease."
         },
         "guidance": {
             "wish": "Wishes may face obstacles, patience and reconsideration are advised.",
@@ -108,7 +108,7 @@
         "japanese": "大凶",
         "oracle": {
             "content": "When the last star fades, the silent sky awaits the dawn.",
-            "explain": "A difficult path may lie before you, and even familiar hopes may seem distant beneath the weight of uncertainty. Like a traveller beneath a starless sky, you may struggle to recognise the way forward. Do not allow despair to guide your footsteps, nor mistake the darkness of this moment for the end of your journey. Rest when you must, protect what remains precious, and remember that even a sky without stars may welcome the morning sun."
+            "explain": "Hardships may leave even familiar hopes beyond reach. Protect what remains precious, and remember that even the darkest sky may welcome the dawn."
         },
         "guidance": {
             "wish": "Wishes are unlikely to be fulfilled at present, reconsider your path.",
