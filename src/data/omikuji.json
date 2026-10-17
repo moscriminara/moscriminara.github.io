@@ -86,7 +86,7 @@
     },
     {
         "id": 6,
-        "fortune": "Bad Fortune",
+        "fortune": "Misfortune",
         "japanese": "凶",
         "oracle": {
             "content": "The falling rain conceals the path beneath your feet.",
@@ -205,7 +205,7 @@
     },
     {
         "id": 13,
-        "fortune": "Misfortune",
+        "fortune": "Bad Fortune",
         "japanese": "凶",
         "oracle": {
             "content": "A broken compass trembles beneath the wandering clouds.",
